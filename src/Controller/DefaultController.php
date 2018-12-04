@@ -14,4 +14,12 @@ class DefaultController extends AbstractController
     {
         return $this->render('default/index.html.twig');
     }
+
+    /**
+     * @Route("/dashboard", name="dashboard")
+     */
+    public function loggedAction()
+    {
+        return $this->render('default/logged.html.twig');
+    }
 }
