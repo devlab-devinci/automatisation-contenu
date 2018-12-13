@@ -3,12 +3,21 @@
 {% block title %}Dashboard{% endblock %}
 
 {% block body %}
-    {{ form_start(form) }}
-        {{ form_row(form.username) }}
-        {{ form_row(form.email) }}
-        {{ form_row(form.plainPassword.first) }}
-        {{ form_row(form.plainPassword.second) }}
-
-        <button type="submit">S'inscrire</button>
-    {{ form_end(form) }}
+    <div class="container my-5">
+        {{ form_start(form) }}
+        <div class="form-group">
+            {{ form_row(form.username) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.email) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.plainPassword.first) }}
+        </div>
+        <div class="form-group">
+            {{ form_row(form.plainPassword.second) }}
+        </div>
+        <a href="/" class="btn btn-primary mr-3">Retour à l'accueil</a><button class="btn btn-primary" type="submit">S'inscrire</button>
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
