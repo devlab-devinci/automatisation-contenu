@@ -20,6 +20,7 @@ class DefaultController extends AbstractController
      */
     public function loggedAction()
     {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
         return $this->render('default/logged.html.twig');
     }
 }
