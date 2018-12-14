@@ -1,0 +1,170 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Historique{% endblock %}
+
+{% block body %}
+    <h1 class="mx-5">Liste de matchs s'étant déroulé entre aujourd'hui et une semaine auparavant en France dans la Ligue 1</h1>
+    <p class="mx-5">Cliquez pour avoir plus de détails</p>
+
+    <div class="row matchsList">
+        {% for matcheItem in matches %}
+            <div class="matchsItem">
+                <div class="matchsItem__header">
+                    <span class="mr-3">{{ matcheItem.country_name ~ ' - ' ~ matcheItem.league_name }}</span>
+                    <span class="mr-3">{{ matcheItem.match_date|date('d/m/Y') ~ ' - ' ~ matcheItem.match_time }}</span>
+                    {% if matcheItem.match_status != "" %}
+                        <span class="mr-3">{{ "Statut : " ~ matcheItem.match_status }}</span>
+                    {% endif %}
+                    {% if matcheItem.match_hometeam_score == "" %}
+                        <span>{{ matcheItem.match_hometeam_name ~ ' 0' }}</span>
+                    {% else %}
+                        <span>{{ matcheItem.match_hometeam_name ~ ' ' ~ matcheItem.match_hometeam_score }}</span>
+                    {% endif %}
+                    {% if matcheItem.match_hometeam_score == "" %}
+                        <span>{{ '- 0 ' ~ matcheItem.match_awayteam_name }}</span>
+                    {% else %}
+                        <span>{{ '- ' ~ matcheItem.match_awayteam_score ~ ' ' ~ matcheItem.match_awayteam_name }}</span>
+                    {% endif %}
+                </div>
+                <div class="matchsItem__content">
+                    <div class="mb-3">
+                        <h2>Résultats :</h2>
+                        {% if matcheItem.goalscorer|length > 0 %}
+                            {% for buts in matcheItem.goalscorer %}
+                                {% if buts.home_scorer != "" %}
+                                    <p>{{ "But de " ~ buts.home_scorer ~ " à la " ~ buts.time ~ "ème minute ! Le score est de " ~ buts.score }}</p>
+                                {% endif %}
+                                {% if buts.away_scorer != "" %}
+                                    <p>{{ "But de " ~ buts.away_scorer ~ " à la " ~ buts.time ~ "ème minute ! Le score est de " ~ buts.score }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <p>Aucun but marqué des 2 côtés, match nul !</p>
+                        {% endif %}
+                    </div>
+                    <div class="mb-3">
+                        <h2>Pénalités :</h2>
+                        {% if matcheItem.cards|length > 0 %}
+                            {% for cards in matcheItem.cards %}
+                                {% if cards.home_fault != "" %}
+                                    <p>{{ cards.card|replace({'yellowcard': 'Carton jaune', 'redcard': "Carton rouge"}) ~ " distribuée à " ~ cards.home_fault ~ " à la " ~ cards.time ~ "ème minute !" }}</p>
+                                {% endif %}
+                                {% if cards.away_fault != "" %}
+                                    <p>{{ cards.card|replace({'yellowcard': 'Carton jaune', 'redcard': "Carton rouge"}) ~ " distribuée à " ~ cards.away_fault ~ " à la " ~ cards.time ~ "ème minute !" }}</p>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <p>Aucune pénalité n'a été attribuée aux 2 équipes.</p>
+                        {% endif %}
+                    </div>
+                    <div>
+                        <h2>Statistiques :</h2>
+                        {% if matcheItem.statistics|length > 0 %}
+                            {% for statistics in matcheItem.statistics %}
+                                {% if statistics.type == "shots on target" %}
+                                    <p>
+                                        {{ "Il y a eu " ~ statistics.home }}
+                                            {% if statistics.home > 1 %}
+                                                {{ " tirs cadrés pour l'équipe " }}
+                                            {% else %}
+                                                {{ " tir cadré pour l'équipe " }}
+                                            {% endif %}
+                                        {{ matcheItem.match_hometeam_name ~ " et " ~ statistics.away }}
+                                            {% if statistics.away > 1 %}
+                                                {{ " tirs cadrés pour l'équipe " }}
+                                            {% else %}
+                                                {{ " tir cadré pour l'équipe " }}
+                                            {% endif %}
+                                        {{ matcheItem.match_awayteam_name }}
+                                    </p>
+                                {% elseif statistics.type == "shots off target" %}
+                                    <p>
+                                        {{ "Il y a eu " ~ statistics.home }}
+                                        {% if statistics.home > 1 %}
+                                            {{ " tirs pour l'équipe " }}
+                                        {% else %}
+                                            {{ " tir pour l'équipe " }}
+                                        {% endif %}
+                                        {{ matcheItem.match_hometeam_name ~ " et " ~ statistics.away }}
+                                        {% if statistics.away > 1 %}
+                                            {{ " tirs pour l'équipe " }}
+                                        {% else %}
+                                            {{ " tir pour l'équipe " }}
+                                        {% endif %}
+                                        {{ matcheItem.match_awayteam_name }}
+                                    </p>
+                                {% elseif statistics.type == "possession (%)" %}
+                                    <p>{{ "L'équipe " ~ matcheItem.match_hometeam_name ~ " a possédé la balle à " ~ statistics.home ~ "% durant ce match et l'équipe " ~ matcheItem.match_awayteam_name ~ " a possédé la balle à " ~ statistics.away ~ "%" }}</p>
+                                {% elseif statistics.type == "corners" %}
+                                    <p>
+                                        {{ statistics.home }}
+                                        {% if statistics.home > 1 %}
+                                            {{ " corners sont en faveur de l'équipe " ~ matcheItem.match_hometeam_name }}
+                                        {% else %}
+                                            {{ " corner est en faveur de l'équipe " ~ matcheItem.match_hometeam_name }}
+                                        {% endif %}
+                                        {{ ". En revanche, " ~ statistics.away }}
+                                        {% if statistics.away > 1 %}
+                                            {{ " corners sont en faveur de l'équipe " ~ matcheItem.match_awayteam_name }}
+                                        {% else %}
+                                            {{ " corner est en faveur de l'équipe " ~ matcheItem.match_awayteam_name }}
+                                        {% endif %}
+                                    </p>
+                                {% elseif statistics.type == "offsides" %}
+                                    <p>
+                                        {{ statistics.home }}
+                                        {% if statistics.home > 1 %}
+                                            {{ " joueurs se sont retrouvés hors-jeu pour l'équipe " ~ matcheItem.match_hometeam_name }}
+                                        {% else %}
+                                            {{ " joueur s'est retrouvé hors-jeu pour l'équipe " ~ matcheItem.match_hometeam_name }}
+                                        {% endif %}
+                                        {{ " et " ~ statistics.away }}
+                                        {% if statistics.away > 1 %}
+                                            {{ " joueurs se sont retrouvés hors-jeu pour l'équipe " ~ matcheItem.match_awayteam_name }}
+                                        {% else %}
+                                            {{ " joueur s'est retrouvé hors-jeu pour l'équipe " ~ matcheItem.match_awayteam_name }}
+                                        {% endif %}
+                                    </p>
+                                {% elseif statistics.type == "fouls" %}
+                                    <p>
+                                        {{ statistics.home }}
+                                        {% if statistics.home > 1 %}
+                                            {{ " fautes ont été commises pour l'équipe " ~ matcheItem.match_hometeam_name }}
+                                        {% else %}
+                                            {{ " faute a été commise pour l'équipe " ~ matcheItem.match_hometeam_name }}
+                                        {% endif %}
+                                        {{ " et " ~ statistics.away }}
+                                        {% if statistics.away > 1 %}
+                                            {{ " fautes ont été commises pour l'équipe " ~ matcheItem.match_awayteam_name }}
+                                        {% else %}
+                                            {{ " faute a été commise pour l'équipe " ~ matcheItem.match_awayteam_name }}
+                                        {% endif %}
+                                    </p>
+                                {% elseif statistics.type == "goal kicks" %}
+                                    <p>
+                                        {{ "Il y a eu " ~ statistics.home }}
+                                        {% if statistics.home > 1 %}
+                                            {{ " coups de pied au but pour l'équipe " }}
+                                        {% else %}
+                                            {{ " coup de pied au but pour l'équipe " }}
+                                        {% endif %}
+                                        {{ matcheItem.match_hometeam_name ~ " et " ~ statistics.away }}
+                                        {% if statistics.away > 1 %}
+                                            {{ " coups de pied au but pour l'équipe " }}
+                                        {% else %}
+                                            {{ " coup de pied au but pour l'équipe " }}
+                                        {% endif %}
+                                        {{ matcheItem.match_awayteam_name }}
+                                    </p>
+                                {% endif %}
+                            {% endfor %}
+                        {% else %}
+                            <p>Aucune statistique n'est présente pour ce match.</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,8 @@
+/* DASHBOARD */
+.matchsList{margin: 35px 0;}
+.matchsItem{width: 100%;}
+.matchsItem__header{padding: 10px 15px;}
+.matchsItem__header:hover{cursor:pointer;}
+.matchsItem:nth-child(even) .matchsItem__header{background-color: #1F4488; color: #FFF;}
+.matchsItem:nth-child(odd) .matchsItem__header{background-color: #979CED;}
+.matchsItem__content{display: none; background-color: #74A0CA; text-align: center; padding: 10px 0;}

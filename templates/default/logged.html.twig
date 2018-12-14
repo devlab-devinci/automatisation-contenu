@@ -1,8 +1,32 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}Tableau de bord{% endblock %}
 
 {% block body %}
-    <h1>Tu es connecté !</h1>
-    <a href="/logout">Se déconnecter</a>
+    <h1 class="mx-5">Liste de matchs à venir sur les 3 prochains jours en France dans la Ligue 1</h1>
+
+    <div class="row matchsList">
+        {% for matcheItem in matches %}
+            <div class="matchsItem">
+                <div class="matchsItem__header">
+                    <span class="mr-3">{{ matcheItem.country_name ~ ' - ' ~ matcheItem.league_name }}</span>
+                    <span class="mr-3">{{ matcheItem.match_date|date('d/m/Y') ~ ' - ' ~ matcheItem.match_time }}</span>
+                    {% if matcheItem.match_status != "" %}
+                        <span class="mr-3">{{ "Statut : " ~ matcheItem.match_status }}</span>
+                    {% endif %}
+                    {% if matcheItem.match_hometeam_score == "" %}
+                        <span>{{ matcheItem.match_hometeam_name ~ ' 0' }}</span>
+                    {% else %}
+                        <span>{{ matcheItem.match_hometeam_name ~ ' ' ~ matcheItem.match_hometeam_score }}</span>
+                    {% endif %}
+                    {% if matcheItem.match_hometeam_score == "" %}
+                        <span>{{ '- 0 ' ~ matcheItem.match_awayteam_name }}</span>
+                    {% else %}
+                        <span>{{ '- ' ~ matcheItem.match_awayteam_score ~ ' ' ~ matcheItem.match_awayteam_name }}</span>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+
 {% endblock %}

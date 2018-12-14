@@ -5,6 +5,7 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
+    API_KEY: '348dac645db77bdc775b744eaacb17d2883f6705292ff3be0be554091fd0c4df'
 
 services:
     # default configuration for services in *this* file
