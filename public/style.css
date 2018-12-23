@@ -1,8 +1,34 @@
+/* CONFIG */
+nav{background-color: #5FA86F;}
+.primaryButton {padding: 10px 25px; background-color: #4F8B5C; color: #FFF; border: 1px solid #728B76; border-radius: 15px;}
+.primaryButton:hover {cursor: pointer; background-color: #5FA86F; color: #FFF;}
+.secondaryButton {padding: 13px 25px; background-color: #C9D8DA; color: #000; border: 1px solid #929D9E; border-radius: 15px;}
+.secondaryButton:hover {cursor: pointer; background-color: #929D9E; color: #000;}
+
+/* LOADER */
+.loader {position: absolute; left: 0; top: 0; z-index: -1; width: 100vw; height: 100vh; background-color: #5FA86F; opacity: 0; animation: loaderAnimation 3.5s 1;}
+.loader svg {position: absolute; left: 50vw; top: 50vh; transform: translate(-50%, -50%); animation: loaderSVGAnimation 1.5s infinite;}
+@keyframes loaderSVGAnimation {
+    0% {transform: translate(-50%, -50%) rotate(0deg);}
+    100% {transform: translate(-50%, -50%) rotate(360deg);}
+}
+@keyframes loaderAnimation {
+    0%, 95% {opacity: 1; z-index: 9999;}
+    100% {opacity: 0; z-index: -1;}
+}
+
+/* HOME PAGE */
+.homePage{position: relative; background: url('img/template/home-bg.jpg'); background-size: cover; width: 100vw; height: 100vh; color: #FFF;}
+.homePage__buttonContainer{margin-top: 20vh;}
+
 /* DASHBOARD */
 .matchsList{margin: 35px 0;}
 .matchsItem{width: 100%;}
 .matchsItem__header{padding: 10px 15px;}
 .matchsItem__header:hover{cursor:pointer;}
-.matchsItem:nth-child(even) .matchsItem__header{background-color: #1F4488; color: #FFF;}
-.matchsItem:nth-child(odd) .matchsItem__header{background-color: #979CED;}
-.matchsItem__content{display: none; background-color: #74A0CA; text-align: center; padding: 10px 0;}
+.matchsItem__header--opened + .matchsItem__content {display: block;}
+.matchsItem__headerIcon > svg {transform: rotate(-90deg);}
+.matchsItem__header--opened .matchsItem__headerIcon > svg {transform: rotate(0deg);}
+.matchsItem:nth-child(even) .matchsItem__header{background-color: #26882D; color: #FFF;}
+.matchsItem:nth-child(odd) .matchsItem__header{background-color: #598C54;}
+.matchsItem__content{display: none; background-color: #80AF80; text-align: center; padding: 10px 0;}
