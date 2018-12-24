@@ -3,7 +3,7 @@
 {% block title %}Historique{% endblock %}
 
 {% block body %}
-    <h1 class="mx-5">Liste de matchs s'étant déroulé entre aujourd'hui et une semaine auparavant en France dans la Ligue 1</h1>
+    <h1 class="mx-5">{{ "Liste de matchs s'étant déroulé entre le " ~ "now"|date_modify("-7 days")|date("d/m/Y") ~ " et le " ~ "now"|date("d/m/Y") ~ " en France dans la Ligue 1" }}</h1>
     <p class="mx-5">Cliquez pour avoir plus de détails</p>
 
     <div class="row matchsList">
