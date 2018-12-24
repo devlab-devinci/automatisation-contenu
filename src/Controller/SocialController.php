@@ -25,10 +25,12 @@ class SocialController extends AbstractController
     public function facebookLoginAction()
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+        $AppID = $this->getParameter('FACEBOOK_APP_ID');
+        $AppSecret = $this->getParameter('FACEBOOK_APP_SECRET');
 
         $fb = new Facebook\Facebook([
-            'app_id' => '1397810230354874',
-            'app_secret' => '079a5023d4f61c014506423bc9670e4a',
+            'app_id' => $AppID,
+            'app_secret' => $AppSecret,
             'default_graph_version' => 'v2.10',
         ]);
 

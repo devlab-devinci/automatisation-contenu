@@ -5,7 +5,9 @@
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: 'en'
-    API_KEY: '348dac645db77bdc775b744eaacb17d2883f6705292ff3be0be554091fd0c4df'
+    FOOTBALL_API_KEY: '348dac645db77bdc775b744eaacb17d2883f6705292ff3be0be554091fd0c4df'
+    FACEBOOK_APP_ID: '1397810230354874'
+    FACEBOOK_APP_SECRET: '079a5023d4f61c014506423bc9670e4a'
 
 services:
     # default configuration for services in *this* file

@@ -14,7 +14,7 @@ class LeagueController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $APIkey=$this->getParameter('API_KEY');
+        $APIkey=$this->getParameter('FOOTBALL_API_KEY');
         $from = date('Y-m-d');
         $to = date('Y-m-d', strtotime('+3 days'));
 
@@ -45,7 +45,7 @@ class LeagueController extends AbstractController
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $APIkey=$this->getParameter('API_KEY');
+        $APIkey=$this->getParameter('FOOTBALL_API_KEY');
         $from = date('Y-m-d', strtotime('-7 days'));
         $to = date('Y-m-d');
 
@@ -78,7 +78,7 @@ class LeagueController extends AbstractController
 
         $from = date('Y-m-d');
         $to = date('Y-m-d');
-        $APIkey=$this->getParameter('API_KEY');
+        $APIkey=$this->getParameter('FOOTBALL_API_KEY');
 
         // League ID 127 = Ligue 1 / Country ID 173 = France
         $curl_options = array(
