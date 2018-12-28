@@ -1,15 +1,12 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Connection à un réseau social{% endblock %}
+{% block title %}Connexion à un réseau social{% endblock %}
 
 {% block body %}
     <div>
         <h1>Se connecter à un réseau social</h1>
-        {% if success == 'done' %}
-            <p>Vous êtes bien connecté avec Facebook</p>
-        {% endif %}
         <div>
-            <a href="/facebookLogin">Se connecter à Facebook</a>
+            <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
         </div>
     </div>
 {% endblock %}

@@ -32,3 +32,19 @@ nav{background-color: #5FA86F;}
 .matchsItem:nth-child(even) .matchsItem__header{background-color: #26882D; color: #FFF;}
 .matchsItem:nth-child(odd) .matchsItem__header{background-color: #598C54;}
 .matchsItem__content{display: none; background-color: #80AF80; text-align: center; padding: 10px 0;}
+
+/* FACEBOOK POP-UP */
+.facebook {position: relative; cursor: pointer;}
+.facebook:before {
+    content: "Cliquez pour partager sur Facebook";
+    position: absolute;
+    top: -30px;
+    left: 20px;
+    padding: 5px 15px;
+    border-radius: 10px;
+    background-color: #FFF;
+    color: #000;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+.facebook:hover, .facebook:hover:before {opacity: 1;}
