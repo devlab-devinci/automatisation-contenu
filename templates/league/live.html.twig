@@ -5,12 +5,14 @@
 {% block body %}
     <h1 class="mx-5">Direct des matchs en France dans la Ligue 1</h1>
 
+    {% set matchID = 0 %}
     <div class="row matchsList">
-        {% if not matches.error %}
-            {% if not matches[0] %}
+        {% if matches.error is not defined %}
+            {% if not matches %}
                 <p class="mx-5">Il n'y a pas de match en direct.</p>
             {% else %}
                 {% for matcheItem in matches %}
+                    {% set matchID = matchID + 1 %}
                     <div class="matchsItem">
                         <div class="matchsItem__header">
                             <span class="mr-3">{{ matcheItem.country_name ~ ' - ' ~ matcheItem.league_name }}</span>
@@ -18,21 +20,23 @@
                             {% if matcheItem.match_status != "" %}
                                 <span class="mr-3">{{ "Statut : " ~ matcheItem.match_status }}</span>
                             {% endif %}
-                            {% if matcheItem.match_hometeam_score == "" %}
-                                <span>{{ matcheItem.match_hometeam_name ~ ' 0' }}</span>
-                            {% else %}
-                                <span>{{ matcheItem.match_hometeam_name ~ ' ' ~ matcheItem.match_hometeam_score }}</span>
-                            {% endif %}
-                            {% if matcheItem.match_hometeam_score == "" %}
-                                <span>{{ '- 0 ' ~ matcheItem.match_awayteam_name }}</span>
-                            {% else %}
-                                <span>{{ '- ' ~ matcheItem.match_awayteam_score ~ ' ' ~ matcheItem.match_awayteam_name }}</span>
-                            {% endif %}
+                            <span class="matchsItem__headerScores" data-id="{{ matchID }}">
+                                {% if matcheItem.match_hometeam_score == "" %}
+                                    <span>{{ matcheItem.match_hometeam_name ~ ' 0' }}</span>
+                                {% else %}
+                                    <span>{{ matcheItem.match_hometeam_name ~ ' ' ~ matcheItem.match_hometeam_score }}</span>
+                                {% endif %}
+                                {% if matcheItem.match_awayteam_score == "" %}
+                                    <span>{{ '- 0 ' ~ matcheItem.match_awayteam_name }}</span>
+                                {% else %}
+                                    <span>{{ '- ' ~ matcheItem.match_awayteam_score ~ ' ' ~ matcheItem.match_awayteam_name }}</span>
+                                {% endif %}
+                            </span>
                         </div>
                         <div class="matchsItem__content">
                             <div class="mb-3">
                                 <h2>Résultats :</h2>
-                                <div class="facebook">
+                                <div class="facebook matchsItem__results" data-id="{{ matchID }}">
                                     {% if matcheItem.goalscorer|length > 0 %}
                                         {% for buts in matcheItem.goalscorer %}
                                             {% if buts.home_scorer != "" %}
@@ -49,7 +53,7 @@
                             </div>
                             <div class="mb-3">
                                 <h2>Constitution des équipes :</h2>
-                                <div class="row facebook">
+                                <div class="row facebook matchsItem__team" data-id="{{ matchID }}">
                                     {% if matcheItem.lineup|length > 0 %}
                                         <div class="col-md">
                                             {% if matcheItem.lineup.home.starting_lineups|length > 0 %}
@@ -94,7 +98,7 @@
                             </div>
                             <div class="mb-3">
                                 <h2>Remplacements :</h2>
-                                <div class="facebook">
+                                <div class="facebook matchsItem__substitutes" data-id="{{ matchID }}">
                                     {% if matcheItem.lineup|length > 0 %}
                                         {% if matcheItem.lineup.home.substitutions|length > 0 %}
                                             {% for switches in matcheItem.lineup.home.substitutions %}
@@ -117,7 +121,7 @@
                             </div>
                             <div class="mb-3">
                                 <h2>Pénalités :</h2>
-                                <div class="facebook">
+                                <div class="facebook matchsItem__penalities" data-id="{{ matchID }}">
                                     {% if matcheItem.cards|length > 0 %}
                                         {% for cards in matcheItem.cards %}
                                             {% if cards.home_fault != "" %}
@@ -134,7 +138,7 @@
                             </div>
                             <div>
                                 <h2>Statistiques :</h2>
-                                <div class="facebook">
+                                <div class="facebook matchsItem__statistics" data-id="{{ matchID }}">
                                     {% if matcheItem.statistics|length > 0 %}
                                         {% for statistics in matcheItem.statistics %}
                                             {% if statistics.type == "shots on target" %}
@@ -260,5 +264,184 @@
                 quote: $(this).text()
             }, function(response){});
         });
+
+        function ajaxMatchsText() {
+            $.ajax({
+                url:'/live',
+                type: "POST",
+                dataType: "json",
+                data: {
+                    "ajaxEnabled": true
+                },
+                async: true,
+                success: function (data)
+                {
+                    if (!(data.error)) {
+                        if (!(data)) {
+                            $('.matchsList').html("<p class='mx-5'>Il n'y a pas de match en direct.</p>");
+                        } else {
+                            console.log(data.sort(function(a, b){
+                                if (a.match_id < b.match_id) {
+                                    return -1;
+                                }
+                                return 1;
+                            }));
+                            //TODO: UPDATE ONLY SCORES, RESULTS ETC.
+                            data
+                                .sort(function(a, b){
+                                    if (a.match_id < b.match_id) {
+                                        return -1;
+                                    }
+                                    return 1;
+                                })
+                                .forEach(function(matcheItem, index){
+                                    // Header score
+                                    $('.matchsItem__headerScores[data-id=' + index + 1 + ']').html("<span>" + matcheItem.match_hometeam_name + ' ' + matcheItem.match_hometeam_score + ' - ' + matcheItem.match_awayteam_score + ' ' + matcheItem.match_awayteam_name + "</span>");
+                                    // Results
+                                    if (matcheItem.goalscorer.length > 0) {
+                                        matcheItem.goalscorer.forEach(function(buts){
+                                            if (buts.home_scorer !==  "") {
+                                                $('matchsItem__results[data-id=' + index + 1 + ']').html("<p>But de " + buts.home_scorer + " à la " + buts.time + "ème minute ! Le score est de " + buts.score + "</p>");
+                                            }
+                                            if (buts.away_scorer !==  "") {
+                                                $('matchsItem__results[data-id=' + index + 1 + ']').html("<p>But de " + buts.away_scorer + " à la " + buts.time + "ème minute ! Le score est de " + buts.score + "</p>");
+                                            }
+                                        });
+                                    } else {
+                                        $('matchsItem__results[data-id=' + index + 1 + ']').html("<p>Aucun but marqué des 2 côtés, match nul !</p>");
+                                    }
+                                    // Teams
+                                    if (matcheItem.lineup.length > 0) {
+                                        // HomeTeam Composition
+                                        let homeTeamTitle = "<h3>Équipe de " + matcheItem.match_hometeam_name + "</h3>";
+                                        let homeTeamLineUp = "";
+                                        let homeTeamSubstitutes = "";
+                                        if (matcheItem.lineup.home.starting_lineups.length > 0) {
+                                            matcheItem.lineup.home.starting_lineup.forEach(function(teamPlayers){
+                                                homeTeamLineUp += "<p>" + teamPlayers.lineup_player + " est le numéro " + teamPlayers.lineup_number + " à la position " + teamPlayers.lineup_position + "</p>";
+                                            })
+                                        } else {
+                                            homeTeamLineUp = "<p>Pas de renseignement sur l'équipe dans l'équipe de " + matcheItem.match_hometeam_name + "</p>";
+                                        }
+                                        if (matcheItem.lineup.home.substitutes.length > 0) {
+                                            matcheItem.lineup.home.substitutes.forEach(function(teamSubstitutes){
+                                                homeTeamSubstitutes += "<p>" + teamSubstitutes.lineup_player + "</p>";
+                                            })
+                                        } else {
+                                            homeTeamSubstitutes = "<p>Pas de renseignement sur les remplaçants dans l'équipe de " + matcheItem.match_hometeam_name + "</p>";
+                                        }
+                                        // awayTeam Composition
+                                        let awayTeamTitle = "<h3>Équipe de " + matcheItem.match_awayteam_name + "</h3>";
+                                        let awayTeamLineUp = "";
+                                        let awayTeamSubstitutes = "";
+                                        if (matcheItem.lineup.away.starting_lineups.length > 0) {
+                                            matcheItem.lineup.away.starting_lineup.forEach(function(teamPlayers){
+                                                awayTeamLineUp += "<p>" + teamPlayers.lineup_player + " est le numéro " + teamPlayers.lineup_number + " à la position " + teamPlayers.lineup_position + "</p>";
+                                            })
+                                        } else {
+                                            awayTeamLineUp = "<p>Pas de renseignement sur l'équipe dans l'équipe de " + matcheItem.match_awayteam_name + "</p>";
+                                        }
+                                        if (matcheItem.lineup.away.substitutes.length > 0) {
+                                            matcheItem.lineup.away.substitutes.forEach(function(teamSubstitutes){
+                                                awayTeamSubstitutes += "<p>" + teamSubstitutes.lineup_player + "</p>";
+                                            })
+                                        } else {
+                                            awayTeamSubstitutes = "<p>Pas de renseignement sur les remplaçants dans l'équipe de " + matcheItem.match_awayteam_name + "</p>";
+                                        }
+                                        $('matchsItem__team[data-id=' + index + 1 + ']').html("<div class='col-md'>" + homeTeamTitle + homeTeamLineUp + homeTeamSubstitutes + "</div>" + "<div class='col-md'>" + awayTeamTitle + awayTeamLineUp + awayTeamSubstitutes + "</div>");
+                                        
+                                    } else {
+                                        $('matchsItem__team[data-id=' + index + 1 + ']').html("<p>Aucune équipe renseignée dans les 2 équipes.</p>");
+                                    }
+                                    // Substitutes
+                                    if (matcheItem.lineup.length > 0) {
+                                        // Home substitutes
+                                        let homeSubstitutes = "";
+                                        if (matcheItem.lineup.home.substitutions.length > 0) {
+                                            matcheItem.lineup.home.substitutions.forEach(function(switches){
+                                                homeSubstitutes += "<p>Remplacement de " + switches.lineup_player.replace('|', 'par') + " à la " + switches.lineup_time + " minute dans l'équipe " + matcheItem.match_hometeam_name + "</p>";
+                                            });
+                                        } else {
+                                            homeSubstitutes = "<p>Pas de remplacement dans l'équipe de " + matcheItem.match_hometeam_name + "</p>";
+                                        }
+
+                                        // Away substitutes
+                                        let awaySubstitutes = "";
+                                        if (matcheItem.lineup.away.substitutions.length > 0) {
+                                            matcheItem.lineup.away.substitutions.forEach(function(switches){
+                                                awaySubstitutes += "<p>Remplacement de " + switches.lineup_player.replace('|', 'par') + " à la " + switches.lineup_time + " minute dans l'équipe " + matcheItem.match_awayteam_name + "</p>";
+                                            });
+                                        } else {
+                                            awaySubstitutes = "<p>Pas de remplacement dans l'équipe de " + matcheItem.match_awayteam_name + "</p>";
+                                        }
+                                        $('matchsItem__substitutes[data-id=' + index + 1 + ']').html(homeSubstitutes + awaySubstitutes);
+                                    } else {
+                                        $('matchsItem__substitutes[data-id=' + index + 1 + ']').html("<p>Aucun remplacement n'a été effectué dans les 2 équipes.</p>");
+                                    }
+                                    // Penalities
+                                    if (matcheItem.cards.length > 0) {
+                                        matcheItem.cards.forEach(function(cards){
+                                            // Home cards
+                                            let homeCards = "";
+                                            if (cards.home_fault !== "") {
+                                                homeCards += "<p>" + cards.card.replace('yellowcard', 'Carton jaune').replace('redcard', "Carton rouge") + " distribuée à " + cards.home_fault + " à la " + cards.time + "ème minute !</p>";
+                                            }
+                                            // Away cards
+                                            let awayCards = "";
+                                            if (cards.away_fault !== "") {
+                                                awayCards += "<p>" + cards.card.replace('yellowcard', 'Carton jaune').replace('redcard', "Carton rouge") + " distribuée à " + cards.away_fault + " à la " + cards.time + "ème minute !</p>";
+                                            }
+                                            $('matchsItem__penalities[data-id=' + index + 1 + ']').html(homeCards + awayCards);
+                                        });
+                                    } else {
+                                        $('matchsItem__penalities[data-id=' + index + 1 + ']').html("<p>Aucune pénalité n'a été attribuée aux 2 équipes.</p>");
+                                    }
+                                    // Statistics
+                                    if (matcheItem.statistics.length > 0) {
+                                        let Allstatistics = "";
+                                        matcheItem.statistics.forEach(function(statistics){
+                                           switch(statistics.type) {
+                                               case "shots on target":
+                                                   Allstatistics += "<p>Il y a eu " + statistics.home + "tirs cadrés pour l'équipe " + matcheItem.match_hometeam_name + "et" + statistics.away + "tirs cadrés pour l'équipe " + matcheItem.match_awayteam_name + "</p>";
+                                                   break;
+                                               case "shots off target":
+                                                   Allstatistics += "<p>Il y a eu " + statistics.home + "tirs pour l'équipe " + matcheItem.match_hometeam_name + "et" + statistics.away + "tirs pour l'équipe " + matcheItem.match_awayteam_name + "</p>";
+                                                   break;
+                                               case "possession (%)":
+                                                   Allstatistics += "<p>L'équipe " + matcheItem.match_hometeam_name + "a possédé la balle à" + statistics.home + "% durant ce match et l'équipe " + matcheItem.match_awayteam_name + " a possédé la balle à " + statistics.away + "%</p>";
+                                                   break;
+                                               case "corners":
+                                                   Allstatistics += "<p>" + statistics.home + " corners sont en faveur de l'équipe " +  matcheItem.match_hometeam_name + ". En revanche," + statistics.away + " corners sont en faveur de l'équipe " + matcheItem.match_awayteam_name + "</p>";
+                                                   break;
+                                               case "offsides":
+                                                   Allstatistics += "<p>" + statistics.home + " joueurs se sont retrouvés hors-jeu pour l'équipe " +  matcheItem.match_hometeam_name + " et " + statistics.away + " joueurs se sont retrouvés hors-jeu pour l'équipe " + matcheItem.match_awayteam_name + "</p>";
+                                                   break;
+                                               case "fouls":
+                                                   Allstatistics += "<p>" + statistics.home + " fautes ont été commises pour l'équipe " +  matcheItem.match_hometeam_name + " et " + statistics.away + " fautes ont été commises pour l'équipe " + matcheItem.match_awayteam_name + "</p>";
+                                                   break;
+                                               case "goal kicks":
+                                                   Allstatistics += "<p>" + statistics.home + " coups de pied au but pour l'équipe " +  matcheItem.match_hometeam_name + " et " + statistics.away + " coups de pied au but pour l'équipe " + matcheItem.match_awayteam_name + "</p>";
+                                                   break;
+                                               default:
+                                                   break;
+                                           }
+                                        });
+                                    } else {
+                                        $('matchsItem__statistics[data-id=' + index + 1 + ']').html("<p>Aucune statistique n'est présente pour ce match.</p>");
+                                    }
+                                });
+                        }
+                    } else {
+                        $('.matchsList').html("<p class='mx-5'>Il n'y a pas de match en direct.</p>");
+                    }
+                },
+                error: function(data)
+                {
+                    console.log(data);
+                }
+            });
+            setInterval(ajaxMatchsText, 60000);
+        }
+        ajaxMatchsText();
     </script>
 {% endblock %}

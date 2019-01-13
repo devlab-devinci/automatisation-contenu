@@ -6,8 +6,8 @@
     <h1 class="mx-5">Liste de matchs à venir sur les 3 prochains jours en France dans la Ligue 1</h1>
 
     <div class="row matchsList">
-        {% if not matches.error %}
-            {% if not matches[0] %}
+        {% if matches.error is not defined %}
+            {% if not matches %}
                 <p class="mx-5">Il n'y a pas de match sur les 3 jours à venir.</p>
             {% else %}
                 {% for matcheItem in matches %}
@@ -23,7 +23,7 @@
                             {% else %}
                                 <span>{{ matcheItem.match_hometeam_name ~ ' ' ~ matcheItem.match_hometeam_score }}</span>
                             {% endif %}
-                            {% if matcheItem.match_hometeam_score == "" %}
+                            {% if matcheItem.match_awayteam_score == "" %}
                                 <span>{{ '- 0 ' ~ matcheItem.match_awayteam_name }}</span>
                             {% else %}
                                 <span>{{ '- ' ~ matcheItem.match_awayteam_score ~ ' ' ~ matcheItem.match_awayteam_name }}</span>

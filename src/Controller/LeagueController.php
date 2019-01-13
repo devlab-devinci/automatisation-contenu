@@ -4,6 +4,8 @@ namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class LeagueController extends AbstractController
 {
@@ -72,7 +74,7 @@ class LeagueController extends AbstractController
     /**
      * @Route("/live", name="live")
      */
-    public function liveMatchesAction()
+    public function liveMatchesAction(Request $request = null)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
@@ -82,7 +84,8 @@ class LeagueController extends AbstractController
 
         // League ID 127 = Ligue 1 / Country ID 173 = France
         $curl_options = array(
-            CURLOPT_URL => "https://apifootball.com/api/?action=get_events&from=$from&to=$to&country_id=173&league_id=127&match_live=1&APIkey=$APIkey",
+            //CURLOPT_URL => "https://apifootball.com/api/?action=get_events&from=$from&to=$to&country_id=173&league_id=127&match_live=1&APIkey=$APIkey",
+            CURLOPT_URL => "https://apifootball.com/api/?action=get_events&from=2018-12-28&to=2018-12-30&country_id=169&league_id=63&APIkey=$APIkey",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_TIMEOUT => 30,
@@ -94,6 +97,10 @@ class LeagueController extends AbstractController
         $result = curl_exec( $curl );
 
         $result = (array) json_decode($result);
+
+        if ($request->request->get('ajaxEnabled')) {
+            return new JsonResponse($result);
+        }
 
         return $this->render('league/live.html.twig', [
             'matches' => $result
