@@ -7,7 +7,7 @@
     <p class="mx-5">Cliquez pour avoir plus de détails</p>
 
     <div class="row matchsList">
-        {% if if matches.error is not defined %}
+        {% if matches.error is not defined %}
             {% if not matches %}
                 <p class="mx-5">{{ "Il n'y a pas de match entre le " ~ "now"|date_modify("-7 days")|date("d/m/Y") ~ " et le " ~ "now"|date("d/m/Y") ~ " en France dans la Ligue 1." }}</p>
             {% else %}
