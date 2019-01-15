@@ -280,13 +280,6 @@
                         if (!(data)) {
                             $('.matchsList').html("<p class='mx-5'>Il n'y a pas de match en direct.</p>");
                         } else {
-                            console.log(data.sort(function(a, b){
-                                if (a.match_id < b.match_id) {
-                                    return -1;
-                                }
-                                return 1;
-                            }));
-                            //TODO: UPDATE ONLY SCORES, RESULTS ETC.
                             data
                                 .sort(function(a, b){
                                     if (a.match_id < b.match_id) {
@@ -440,8 +433,8 @@
                     console.log(data);
                 }
             });
-            setInterval(ajaxMatchsText, 60000);
         }
         ajaxMatchsText();
+        setInterval(ajaxMatchsText, 60000);
     </script>
 {% endblock %}

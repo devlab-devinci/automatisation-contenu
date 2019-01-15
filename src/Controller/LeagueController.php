@@ -84,7 +84,8 @@ class LeagueController extends AbstractController
 
         // League ID 127 = Ligue 1 / Country ID 173 = France
         $curl_options = array(
-            CURLOPT_URL => "https://apifootball.com/api/?action=get_events&from=$from&to=$to&country_id=173&league_id=127&match_live=1&APIkey=$APIkey",
+            //CURLOPT_URL => "https://apifootball.com/api/?action=get_events&from=$from&to=$to&country_id=173&league_id=127&match_live=1&APIkey=$APIkey",
+            CURLOPT_URL => 'https://apifootball.com/api/?action=get_events&from=2018-12-01&to=2018-12-30&country_id=169&league_id=63&APIkey='.$APIkey,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_TIMEOUT => 30,

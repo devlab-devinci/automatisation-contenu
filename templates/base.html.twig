@@ -39,14 +39,16 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
                         {% if is_granted('ROLE_USER') %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/dashboard">Dashboard</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/history">Historique</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/live">Direct</a>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMatches" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Matchs
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMatches">
+                                    <a class="nav-link" href="/dashboard">Tableau de bord</a>
+                                    <a class="nav-link" href="/history">Historique</a>
+                                    <a class="nav-link" href="/live">Direct</a>
+                                    <a class="nav-link" href="/visual">Création de visuel</a>
+                                </div>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/social">Réseaux sociaux</a>
