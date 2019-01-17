@@ -12,5 +12,16 @@
                 {{ form_row(form.submit) }}
             </div>
         {{ form_end(form) }}
+        {% if status == 'not a picture' %}
+            <div class="text-center">
+                <p>Ceci n'est pas une image</p>
+            </div>
+        {% endif %}
+        {% if photo %}
+            <div class="text-center">
+                <p>Vous avez mis cette photo en ligne :</p>
+                <img class="photoSubmitted" src="{{ photo }}" alt="Photo upload" />
+            </div>
+        {% endif %}
     </div>
 {% endblock %}

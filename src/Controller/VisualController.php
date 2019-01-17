@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Gallery;
 use App\Form\VisualType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -24,14 +25,54 @@ class VisualController extends AbstractController
         $form = $this->createForm(VisualType::class, []);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            $pictureUrl = '';
             /** @var UploadedFile $file */
             $file = $request->files->get('visual')['photo'];
-            $file->move(__DIR__ . '/../../public/uploads/' . $user->getId() . '/', $file->getClientOriginalName());
-            return $this->redirectToRoute('visualView');
+            $photoExtensions = ['jpg', 'jpeg', 'png', 'gif'];
+            if (in_array($file->getClientOriginalExtension(), $photoExtensions)) {
+                $pictureName = uniqid($user->getId()) . '.' . $file->getClientOriginalExtension();
+                $pictureUrl = 'uploads/gallery/' . $pictureName;
+                $file->move(__DIR__ . '/../../public/uploads/gallery/', $pictureName);
+                // Write in database path
+                $entity = $this->getDoctrine()->getManager();
+                $picture = new Gallery();
+                $picture->setPath($pictureUrl);
+                $picture->setUserId($user);
+                $picture->setCreatedAt(new \DateTime());
+                $entity->persist($picture);
+                $entity->flush();
+                $status = 'ok';
+            } else {
+                $status = 'not a picture';
+            }
+            return $this->render('visual/visual.html.twig', [
+                'form' => $form->createView(),
+                'photo' => $pictureUrl,
+                'status' => $status
+            ]);
         }
 
         return $this->render('visual/visual.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'photo' => '',
+            'status' => ''
+        ]);
+    }
+
+    /**
+     * @param UserInterface $user
+     * @Route("/gallery", name="gallery")
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function galleryUser(UserInterface $user)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $repositoryGallery = $this->getDoctrine()->getRepository(Gallery::class);
+        $photos = $repositoryGallery->findBy(['userId' => $user->getId()], ['createdAt' => 'DESC']);
+
+        return $this->render('visual/gallery.html.twig', [
+            'photos' => $photos
         ]);
     }
 }

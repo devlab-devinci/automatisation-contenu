@@ -48,3 +48,7 @@ nav{background-color: #5FA86F;}
     transition: opacity 0.25s ease;
 }
 .facebook:hover, .facebook:hover:before {opacity: 1;}
+
+/* GALLERY */
+.photoSubmitted {width: 30%; height: auto;}
+.photoGallery {width: 100%; height: auto;}
