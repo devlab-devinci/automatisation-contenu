@@ -11,6 +11,8 @@ class UserFixtures extends Fixture
 {
     private $passwordEncoder;
 
+    public const USER_REFERENCE = 'user';
+
     public function __construct(UserPasswordEncoderInterface $passwordEncoder)
     {
         $this->passwordEncoder = $passwordEncoder;
@@ -23,9 +25,11 @@ class UserFixtures extends Fixture
 
         $user = new User();
         $user->setEmail('test@test.fr');
-        $user->setPassword($this->passwordEncoder->encodePassword($user, 'root'));
+        $user->setPassword($this->passwordEncoder->encodePassword($user, 'test'));
         $user->setUsername('Pseudo test');
         $manager->persist($user);
         $manager->flush();
+
+        $this->addReference(self::USER_REFERENCE, $user);
     }
 }
