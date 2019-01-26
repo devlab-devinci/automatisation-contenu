@@ -75,4 +75,22 @@ class VisualController extends AbstractController
             'photos' => $photos
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @param UserInterface $user
+     * @Route("/creation", name="creation")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function creation(Request $request, UserInterface $user)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $repositoryGallery = $this->getDoctrine()->getRepository(Gallery::class);
+        $photo = $repositoryGallery->findOneBy(['userId' => $user->getId()]);
+
+        return $this->render('visual/creation.html.twig', [
+            'photo' => $photo,
+        ]);
+    }
 }
