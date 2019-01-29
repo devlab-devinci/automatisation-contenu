@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class VisualController extends AbstractController
 {
@@ -87,10 +88,33 @@ class VisualController extends AbstractController
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
         $repositoryGallery = $this->getDoctrine()->getRepository(Gallery::class);
-        $photo = $repositoryGallery->findOneBy(['userId' => $user->getId()]);
+        $photo = $repositoryGallery->findOneBy(['userId' => $user->getId()], ['createdAt' => 'DESC']);
 
         return $this->render('visual/creation.html.twig', [
             'photo' => $photo,
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param UserInterface $user
+     * @Route("/publication", name="publication")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function publication(Request $request, UserInterface $user)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $img = $request->request->get('img');
+
+        list(, $img) = explode(';', $img);
+        list(, $img) = explode(',', $img);
+        $img = base64_decode($img);
+        file_put_contents(__DIR__ . '/../../public/uploads/visual/'.$user->getId().'.jpeg', $img);
+
+        $response = new JsonResponse();
+        $response->setData($user->getId());
+        return $response;
+
     }
 }

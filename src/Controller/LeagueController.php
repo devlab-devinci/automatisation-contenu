@@ -18,7 +18,7 @@ class LeagueController extends AbstractController
 
         $APIkey=$this->getParameter('FOOTBALL_API_KEY');
         $from = date('Y-m-d');
-        $to = date('Y-m-d', strtotime('+3 days'));
+        $to = date('Y-m-d', strtotime('+5 days'));
 
         // League ID 127 = Ligue 1 / Country ID 173 = France
         $curl_options = array(
@@ -29,6 +29,8 @@ class LeagueController extends AbstractController
             CURLOPT_CONNECTTIMEOUT => 5
         );
 
+        dd($curl_options);
+
         $curl = curl_init();
         curl_setopt_array( $curl, $curl_options );
         $result = curl_exec( $curl );
@@ -36,7 +38,7 @@ class LeagueController extends AbstractController
         $result = (array) json_decode($result);
 
         return $this->render('default/logged.html.twig', [
-            'matches' => $result
+            'matches' => $result,
         ]);
     }
 
