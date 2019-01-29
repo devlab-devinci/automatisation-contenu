@@ -60,10 +60,16 @@ class User implements UserInterface
      */
     private $image_id;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Visual", mappedBy="userId")
+     */
+    private $visual_id;
+
     public function __construct()
     {
         $this->roles = array('ROLE_USER');
         $this->image_id = new ArrayCollection();
+        $this->visual_id = new ArrayCollection();
     }
 
     // other properties and methods

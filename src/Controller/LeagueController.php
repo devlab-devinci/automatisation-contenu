@@ -29,8 +29,6 @@ class LeagueController extends AbstractController
             CURLOPT_CONNECTTIMEOUT => 5
         );
 
-        dd($curl_options);
-
         $curl = curl_init();
         curl_setopt_array( $curl, $curl_options );
         $result = curl_exec( $curl );

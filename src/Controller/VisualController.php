@@ -98,10 +98,10 @@ class VisualController extends AbstractController
     /**
      * @param Request $request
      * @param UserInterface $user
-     * @Route("/publication", name="publication")
+     * @Route("/saveVisual", name="saveVisual")
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      */
-    public function publication(Request $request, UserInterface $user)
+    public function saveVisual(Request $request, UserInterface $user)
     {
         $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 

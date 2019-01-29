@@ -108,7 +108,7 @@ $(document).ready(function(){
             getCanvas = canvas;
             imgData = canvas.toDataURL('image/jpeg');
             $.ajax({
-                url: "/publication",
+                url: "/saveVisual",
                 data: { img: imgData},
                 dataType: 'json',
                 type:'POST'
