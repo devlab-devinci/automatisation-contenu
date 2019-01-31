@@ -22,7 +22,7 @@ class Visual
     private $path;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="image_id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="visual_id")
      * @ORM\JoinColumn(nullable=false)
      */
     private $userId;

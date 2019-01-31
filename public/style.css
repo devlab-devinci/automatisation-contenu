@@ -173,14 +173,22 @@ input[type=range] {
 /*    margin: 0 auto;*/
 }
 
-#imageContainer {
+#imageContainer-preview {
   margin-top: 25px;
   position: relative;
 }
-#imageContainer img {
+#imageContainer-preview img {
     width: 100%;
   }
-#imageContainer p {
+#imageContainer-preview p {
+    color: #FFF;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 10;
+}
+#imageContainer-real p {
     color: #FFF;
     position: absolute;
     top: 0px;

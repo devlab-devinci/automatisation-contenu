@@ -12,25 +12,25 @@ $(document).ready(function(){
     // Add text on img
     $('#text-visual').on('keyup', function(){
     	var text = $(this).val();
-    	$('#imageContainer p').html(text);
+    	$('.imageContainer p').html(text);
     });
 
     $('#bigger').on('click', function(){
-      var fontSize = parseInt($('#imageContainer p').css("font-size"));
+      var fontSize = parseInt($('.imageContainer p').css("font-size"));
       fontSize = fontSize + 1 + "px";
-      $('#imageContainer p').css('font-size', ''+ fontSize +'');
+      $('.imageContainer p').css('font-size', ''+ fontSize +'');
     });
 
     $('#smaller').on('click', function(){
-      var fontSize = parseInt($('#imageContainer p').css("font-size"));
+      var fontSize = parseInt($('.imageContainer p').css("font-size"));
       fontSize = fontSize - 1 + "px";
-      $('#imageContainer p').css('font-size', ''+ fontSize +'');
+      $('.imageContainer p').css('font-size', ''+ fontSize +'');
     });
 
     function heightText(){
       var height = $("#heightText").val();
 
-      $("#imageContainer p").css("top", ''+ height +'%');
+      $(".imageContainer p").css("top", ''+ height +'%');
 
     }
     $("#heightText").change(heightText).mousemove(heightText);
@@ -38,7 +38,7 @@ $(document).ready(function(){
     function widthText(){
       var width = $("#widthText").val();
 
-      $("#imageContainer p").css("left", ''+ width +'%');
+      $(".imageContainer p").css("left", ''+ width +'%');
 
     }
     $("#widthText").change(widthText).mousemove(widthText);
@@ -55,7 +55,7 @@ $(document).ready(function(){
     	var saturate = $("#saturate").val(); //saturate
     	var sepia = $("#sepia").val(); //sepia
 
-    	$("#imageContainer img").css("filter", 'grayscale(' + gs+
+    	$(".imageContainer").css("filter", 'grayscale(' + gs+
     													 '%) blur(' + blur +
     													 'px) brightness(' + br +
     													 '%) contrast(' + ct +
@@ -65,7 +65,7 @@ $(document).ready(function(){
     													 '%) saturate(' + saturate +
     													 '%) sepia(' + sepia + '%)');
 
-    	$("#imageContainer img").css("-webkit-filter", 'grayscale(' + gs+
+    	$(".imageContainer").css("-webkit-filter", 'grayscale(' + gs+
     													 '%) blur(' + blur +
     													 'px) brightness(' + br +
     													 '%) contrast(' + ct +
@@ -74,6 +74,8 @@ $(document).ready(function(){
     													 '%) invert(' + invert +
     													 '%) saturate(' + saturate +
     													 '%) sepia(' + sepia + '%)');
+
+
 
     }
 
@@ -91,33 +93,31 @@ $(document).ready(function(){
 
 
     // Enregistrer le visuel et envoie sur FB
-    var element = $('#imageContainer')[0];
+    var element = $('#imageContainer-real')[0];
 	  var getCanvas; // global variable
 
 
     $('#button-publish').on('click', function( event ) {
         event.preventDefault();
 
-        var $imgData;
+        domtoimage.toPng(element)
+        .then(function (dataUrl) {
 
-        html2canvas(element, {
-         // canvas: canvas,
-         allowTaint: true,
-         scale: 2,
-         onrendered: function (canvas) {
-            getCanvas = canvas;
-            imgData = canvas.toDataURL('image/jpeg');
+            var img = new Image();
+            img.src = dataUrl;
+
+            const raw = img.getAttribute('src');
+
             $.ajax({
                 url: "/saveVisual",
-                data: { img: imgData},
-                dataType: 'json',
+                data: {'img': raw},
+                //dataType: 'json',
                 type:'POST'
             })
             .done(function( response ) {
               console.log("c'est fait");
             });
-         }
-         });
+        })
 
     });
 

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Gallery;
+use App\Entity\Visual;
 use App\Form\VisualType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
@@ -110,7 +111,15 @@ class VisualController extends AbstractController
         list(, $img) = explode(';', $img);
         list(, $img) = explode(',', $img);
         $img = base64_decode($img);
-        file_put_contents(__DIR__ . '/../../public/uploads/visual/'.$user->getId().'.jpeg', $img);
+        file_put_contents(__DIR__ . '/../../public/uploads/visual/'.uniqid($user->getId()).'.jpeg', $img);
+        $pictureUrl = 'uploads/visual/' .uniqid($user->getId()).'.jpeg';
+        $entity = $this->getDoctrine()->getManager();
+        $picture = new Visual();
+        $picture->setPath($pictureUrl);
+        $picture->setUserId($user);
+        $picture->setCreatedAt(new \DateTime());
+        $entity->persist($picture);
+        $entity->flush();
 
         $response = new JsonResponse();
         $response->setData($user->getId());

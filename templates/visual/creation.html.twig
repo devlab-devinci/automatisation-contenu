@@ -72,41 +72,27 @@
                       </p>
                     </div>
 
-
                     <button class="btn waves-effect waves-light"  type="reset" id="reset">Reset</button>
                 </form>
             </div>
 
+            <!-- Image preview -->
             <div class="col s8">
-                <div id="imageContainer" >
+                <div class="imageContainer" id="imageContainer-preview">
                   <p></p>
                     <img src="{{ photo.path }}"/>
                 </div>
             </div>
           </div>
 
-                <!-- Création du visuel -->
-                <!-- <div class="form-left" style="float: left;">
-                  <form class="form-visual">
-                    <div class="">
-                      <label for="text-visual" name="text-visual">Votre texte :</label>
-                      <input type="text" name="text-visual" id="text-visual" value="">
-                    </div>
+          <!-- Real image saved -->
+          <div style="position:relative;margin-left:-1000px;">
+            <div class="imageContainer" id="imageContainer-real">
+              <p></p>
+              <img src="{{ photo.path }}"/>
+            </div>
+          </div>
 
-
-
-                    <div class="">
-                      <button type="button" name="button-big" id="bigger">Plus grand</button>
-                      <button type="button" name="button-small" id="smaller">Plus petit</button>
-                    </div>
-
-                  </form>
-                </div>
-
-                 Résultat du visuel
-                <div id="backgroundImg" data-img="{{ photo.path }}">
-                  <p id="text-for-visual"></p>
-                </div> -->
             </div>
             <a href="" id="button-publish">Enregistrer ce visuel</a>
 
