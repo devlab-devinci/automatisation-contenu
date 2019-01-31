@@ -185,7 +185,6 @@ input[type=range] {
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 100%;
     z-index: 10;
 }
 #imageContainer-real p {
@@ -193,7 +192,6 @@ input[type=range] {
     position: absolute;
     top: 0px;
     left: 0px;
-    width: 100%;
     z-index: 10;
 }
 

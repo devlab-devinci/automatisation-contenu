@@ -73,8 +73,12 @@ class VisualController extends AbstractController
         $repositoryGallery = $this->getDoctrine()->getRepository(Gallery::class);
         $photos = $repositoryGallery->findBy(['userId' => $user->getId()], ['createdAt' => 'DESC']);
 
+        $repositoryVisual = $this->getDoctrine()->getRepository(Visual::class);
+        $visuals = $repositoryVisual->findBy(['userId' => $user->getId()], ['createdAt' => 'DESC']);
+
         return $this->render('visual/gallery.html.twig', [
-            'photos' => $photos
+            'photos' => $photos,
+            'visuals' => $visuals
         ]);
     }
 
@@ -111,8 +115,9 @@ class VisualController extends AbstractController
         list(, $img) = explode(';', $img);
         list(, $img) = explode(',', $img);
         $img = base64_decode($img);
-        file_put_contents(__DIR__ . '/../../public/uploads/visual/'.uniqid($user->getId()).'.jpeg', $img);
+
         $pictureUrl = 'uploads/visual/' .uniqid($user->getId()).'.jpeg';
+        file_put_contents($pictureUrl, $img);
         $entity = $this->getDoctrine()->getManager();
         $picture = new Visual();
         $picture->setPath($pictureUrl);

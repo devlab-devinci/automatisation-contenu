@@ -14,5 +14,15 @@
         {% else %}
             <p>Il n'y a pas encore de photos.</p>
         {% endif %}
+
+        {% if visuals %}
+            {% for visual in visuals %}
+                <div class="col-md-4 col-sm-10 offset-sm-1 offset-md-0">
+                    <img src="{{ visual.path }}" class="photoGallery" alt="Visuel créé par vous le {{ visual.createdAt|date("d/m/Y") }}" />
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Il n'y a pas encore de visuel.</p>
+        {% endif %}
     </div>
 {% endblock %}

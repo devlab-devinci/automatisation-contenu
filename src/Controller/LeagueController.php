@@ -22,7 +22,7 @@ class LeagueController extends AbstractController
 
         // League ID 127 = Ligue 1 / Country ID 173 = France
         $curl_options = array(
-            CURLOPT_URL => "https://apifootball.com/api/?action=get_events&from=$from&to=$to&country_id=173&league_id=127&APIkey=$APIkey",
+            CURLOPT_URL => "https://apifootball.com/api/?action=get_events&from=$from&to=$to&country_id=173&league_id=127&APIkey=4775edf0762587eae1b3350c7fdeac88361107dcf511eb2b6b83f3f1b8f4824e",
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HEADER => false,
             CURLOPT_TIMEOUT => 30,
@@ -32,8 +32,12 @@ class LeagueController extends AbstractController
         $curl = curl_init();
         curl_setopt_array( $curl, $curl_options );
         $result = curl_exec( $curl );
-
         $result = (array) json_decode($result);
+
+        // Json file if apiKey don't work
+        $matchesJson = file_get_contents(__DIR__ . '/../../public/data/matches.json');
+
+
 
         return $this->render('default/logged.html.twig', [
             'matches' => $result,
