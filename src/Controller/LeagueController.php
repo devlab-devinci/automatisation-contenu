@@ -6,6 +6,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Security\Core\User\UserInterface;
+
+use App\Entity\Visual;
 
 class LeagueController extends AbstractController
 {
@@ -109,5 +112,40 @@ class LeagueController extends AbstractController
         return $this->render('league/live.html.twig', [
             'matches' => $result
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param UserInterface $user
+     * @Route("/publishVisual", name="publishVisual")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function publishVisual(Request $request, UserInterface $user)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $repositoryVisual = $this->getDoctrine()->getRepository(Visual::class);
+        $visuals = $repositoryVisual->findBy(['userId' => $user->getId()], ['createdAt' => 'DESC']);
+
+        return $this->render('league/publishCondition.html.twig', [
+            'visuals' => $visuals,
+        ]);
+
+    }
+
+    /**
+     * @param Request $request
+     * @param UserInterface $user
+     * @Route("/publishVisual/{id_visual}", name="conditions")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function conditions(Request $request, UserInterface $user, $id_visual)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        return $this->render('league/conditions.html.twig', [
+
+        ]);
+
     }
 }

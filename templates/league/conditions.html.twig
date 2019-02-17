@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publier un visuel{% endblock %}
+
+{% block body %}
+    <h1 class="my-5">Choisissez vos conditions pour publier</h1>
+    <form class="" action="" method="post">
+      <div class="">
+        <h3>Publier lorsqu'une équipe gagne</h3>
+        <input type="radio" name="win" value="oui">
+        <label for="teamDomWin">Équipe à domicile</label>
+        <input type="radio" name="win" value="non">
+        <label for="teamExtWin">Équipe à l'extérieur</label>
+
+        <h3>Publier lorsqu'une équipe perd</h3>
+        <input type="radio" name="loose" value="oui">
+        <label for="teamDomLoose">Équipe à domicile</label>
+        <input type="radio" name="loose" value="non">
+        <label for="teamExtLoose">Équipe à l'extérieur</label>
+      </div>
+
+      <div class="">
+        <h3>Publier lorsqu'une équipe marque un but</h3>
+        <input type="radio" name="goal" value="oui">
+        <label for="teamDomGoal">Équipe à domicile</label>
+        <input type="radio" name="goal" value="non">
+        <label for="teamExtGoal">Équipe à l'extérieur</label>
+
+        <h3>Publier lorsqu'une équipe marque un doublé</h3>
+        <input type="radio" name="doubleGoal" value="oui">
+        <label for="teamDomDouble">Équipe à domicile</label>
+        <input type="radio" name="doubleGoal" value="non">
+        <label for="teamExtDouble">Équipe à l'extérieur</label>
+      </div>
+
+    </form>
+
+{% endblock %}

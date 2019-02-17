@@ -1,0 +1,20 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Publier un visuel{% endblock %}
+
+{% block body %}
+    <h1 class="my-5">Choisissez un visuel à publier</h1>
+    <div class="row my-5">
+        {% if visuals %}
+            {% for visual in visuals %}
+                <div class="col-md-4 col-sm-10 offset-sm-1 offset-md-0">
+                  <a href="{{path('conditions', {'id_visual': visual.id})}}">
+                    <img src="{{ visual.path }}" class="photoGallery" alt="Visuel créé par vous le {{ visual.createdAt|date("d/m/Y") }}" />
+                  </a>
+                </div>
+            {% endfor %}
+        {% else %}
+            <p>Il n'y a pas encore de visuel.</p>
+        {% endif %}
+    </div>
+{% endblock %}
