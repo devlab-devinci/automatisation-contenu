@@ -5,9 +5,13 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="img/template/favicon.ico" />
-        {% block stylesheets %}{% endblock %}
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-        <link rel="stylesheet" href="style.css">
+        {% block stylesheets %}
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.5.6/jquery.fancybox.min.css" media="screen">
+            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+            <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+            {{ encore_entry_link_tags('app') }}
+            <link href="https://fonts.googleapis.com/css?family=Permanent+Marker|Rakkas|Yatra+One|Merriweather" rel="stylesheet">
+        {% endblock %}
     </head>
     <body>
         {% block facebookJS %}
@@ -31,56 +35,66 @@
             </script>
         {% endblock %}
         {% block navbar %}
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <a class="navbar-brand" href="/">Automatisation de contenu</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
-                        {% if is_granted('ROLE_USER') %}
+            <nav class="navbar navbar-expand-md">
+                <div class="container">
+                    <img src="img/template/soccer-ball.png" alt="icon-ball">
+                    <a class="navbar-brand ml-2 mt-1" href="/dashboard">AUT<span>O</span> S<span>O</span>CCER</a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                        <ul class="navbar-nav ml-auto">
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMatches" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Matchs
                                 </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownMatches">
-                                    <a class="nav-link" href="/dashboard">Tableau de bord</a>
-                                    <a class="nav-link" href="/history">Historique</a>
-                                    <a class="nav-link" href="/live">Direct</a>
-                                </div>
+                                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                    <li><a class="dropdown-item" href="/dashboard">Tableau de bord</a></li>
+                                    <li><a class="dropdown-item" href="/history">Historique</a></li>
+                                    <li><a class="dropdown-item" href="/history">Direct</a></li>
+                                </ul>
                             </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownVisual" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Visuels
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdownVisual">
-                                    <a class="nav-link" href="/visual">Création de visuel</a>
-                                    <a class="nav-link" href="/gallery">Votre galerie photo</a>
-                                </div>
-                            </li>
-                            <li class="nav-item">
+                            <li class="nav-item active">
                                 <a class="nav-link" href="/social">Réseaux sociaux</a>
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/logout">Se déconnecter</a>
-                            </li>
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="/inscription">Inscription</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="/connexion">Connexion</a>
-                            </li>
-                        {% endif %}
-                    </ul>
+                            {% if is_granted('ROLE_USER') %}
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        Visuels
+                                    </a>
+                                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                        <li><a class="dropdown-item" href="/visual">Création de visuel</a></li>
+                                        <li><a class="dropdown-item" href="/gallery">Votre gelerie photo</a></li>
+                                    </ul>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/logout">Se déconnecter</a>
+                                </li>
+                            {% else %}
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/inscription">Inscription</a>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="/connexion">Connexion</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 </div>
             </nav>
         {% endblock %}
         {% block body %}{% endblock %}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        <script src="script.js"></script>
-        {% block javascripts %}{% endblock %}
+
+        {% block javascripts %}
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            <script src="script.js"></script>
+            <script src="//cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
+            {{ encore_entry_script_tags('app') }}
+            <!-- Renders app.js & a webpack runtime.js file
+                <script src="/build/runtime.js"></script>
+                <script src="/build/app.js"></script> -->
+        {% endblock %}
     </body>
 </html>

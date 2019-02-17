@@ -10,11 +10,11 @@
         <div class="container py-5 text-center">
             <h1>DevLab - Automatisation de contenu</h1>
             <div class="homePage__buttonContainer">
-                {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                {#{% if is_granted('IS_AUTHENTICATED_FULLY') %}#}
                     <a href="/dashboard" class="primaryButton">Me connecter au dashboard</a>
-                {% else %}
-                    <a href="/inscription" class="primaryButton">Tester l'application</a>
-                {% endif %}
+                {#{% else %}#}
+                    {#<a href="/connexion" class="primaryButton">Tester l'application</a>#}
+                {#{% endif %}#}
             </div>
         </div>
     </div>

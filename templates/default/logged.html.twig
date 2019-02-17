@@ -3,38 +3,248 @@
 {% block title %}Tableau de bord{% endblock %}
 
 {% block body %}
-    <h1 class="mx-5">Liste de matchs à venir sur les 3 prochains jours en France dans la Ligue 1</h1>
+    {# Header #}
+    <header>
+    </header>
+    {# End Header #}
 
-    <div class="row matchsList">
-        {% if matches.error is not defined %}
-            {% if not matches %}
-                <p class="mx-5">Il n'y a pas de match sur les 3 jours à venir.</p>
-            {% else %}
-                {% for matcheItem in matches %}
-                    <div class="matchsItem">
-                        <div class="matchsItem__header">
-                            <span class="mr-3">{{ matcheItem.country_name ~ ' - ' ~ matcheItem.league_name }}</span>
-                            <span class="mr-3">{{ matcheItem.match_date|date('d/m/Y') ~ ' - ' ~ matcheItem.match_time }}</span>
-                            {% if matcheItem.match_status != "" %}
-                                <span class="mr-3">{{ "Statut : " ~ matcheItem.match_status }}</span>
-                            {% endif %}
-                            {% if matcheItem.match_hometeam_score == "" %}
-                                <span>{{ matcheItem.match_hometeam_name ~ ' 0' }}</span>
-                            {% else %}
-                                <span>{{ matcheItem.match_hometeam_name ~ ' ' ~ matcheItem.match_hometeam_score }}</span>
-                            {% endif %}
-                            {% if matcheItem.match_awayteam_score == "" %}
-                                <span>{{ '- 0 ' ~ matcheItem.match_awayteam_name }}</span>
-                            {% else %}
-                                <span>{{ '- ' ~ matcheItem.match_awayteam_score ~ ' ' ~ matcheItem.match_awayteam_name }}</span>
-                            {% endif %}
-                        </div>
+    <div class="clearfix"></div>
+
+    {# Intro #}
+    <div class="container intro">
+        {#<div class="row matchsList">#}
+            {#<div class="col">#}
+                {#<h1 class="center">Automatisez vos contenu préférés et partagez les de façon personnalisées</h1>#}
+            {#</div>#}
+        {#</div>#}
+        <div class="row mt-2">
+            <div class="col-12 col-sm-4 col-md-4">
+                <div class="single-service">
+                    <div class="icon">
+                        <img src="http://camilmesfioui.fr/autosoccer/sablier.png" alt="icon" class="ico-small">
                     </div>
-                {% endfor %}
-            {% endif %}
-        {% else %}
-            <p class="mx-5">Il n'y a pas de match sur les 3 jours à venir.</p>
-        {% endif %}
+                    <h4>Consultez vos matchs préférés en direct</h4>
+                    <p class="mt-3">Nous vous fournissons en direct des contenus qui vous intéressent</p>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4 col-md-4">
+                <div class="single-service">
+                    <div class="icon">
+                        <img src="http://camilmesfioui.fr/autosoccer/cut.png" alt="icon"class="ico-big">
+                    </div>
+                    <h4>Personnalisez vos contenus</h4>
+                    <p class="mt-3">Réagissez y en créant un visuel personnalisé !</p>
+                </div>
+            </div>
+            <div class="col-12 col-sm-4 col-md-4">
+                <div class="single-service">
+                    <div class="icon">
+                        <img src="http://camilmesfioui.fr/autosoccer/reseau.png" alt="icon" class="ico-big">
+                    </div>
+                    <h4>Partez le tout avec vos amis</h4>
+                    <p>Faites partagez vos réactions à votre communaté.</p>
+                </div>
+            </div>
+        </div>
     </div>
+    {# End Intro #}
 
+    {# Match List #}
+    <div class="container">
+        <div class="row matchsList">
+            <div class="col-12">
+                <h1 class="custom">Match(s) de Ligue 1 à venir dans les 3 prochains jours</h1>
+                {% if matches.error is not defined %}
+                    {% if not matches %}
+                        <p class="mx-5">Il n'y a pas de match sur les 3 jours à venir.</p>
+                    {% else %}
+                        {% for matcheItem in matches %}
+                            <div class="matchsItem">
+                                <div class="matchsItem__header">
+                                    <span class="mr-3">{{ matcheItem.country_name ~ ' - ' ~ matcheItem.league_name }}</span>
+                                    <span class="mr-3">{{ matcheItem.match_date|date('d/m/Y') ~ ' - ' ~ matcheItem.match_time }}</span>
+                                    {% if matcheItem.match_status != "" %}
+                                        <span class="mr-3">{{ "Statut : " ~ matcheItem.match_status }}</span>
+                                    {% endif %}
+                                    {% if matcheItem.match_hometeam_score == "" %}
+                                        <span>{{ matcheItem.match_hometeam_name ~ ' 0' }}</span>
+                                    {% else %}
+                                        <span>{{ matcheItem.match_hometeam_name ~ ' ' ~ matcheItem.match_hometeam_score }}</span>
+                                    {% endif %}
+                                    {% if matcheItem.match_awayteam_score == "" %}
+                                        <span>{{ '- 0 ' ~ matcheItem.match_awayteam_name }}</span>
+                                    {% else %}
+                                        <span>{{ '- ' ~ matcheItem.match_awayteam_score ~ ' ' ~ matcheItem.match_awayteam_name }}</span>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                {% else %}
+                    <p class="mx-5">Il n'y a pas de match sur les 3 jours à venir.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {#End Match List#}
+
+
+    {#TEST Match list #}
+    <section class="testimonials">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <h1 class="custom">Match(s) de ligue 1 à venir</h1>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th scope="col">France - Ligue 1</th>
+                            <th scope="col">1/01/2019</th>
+                            <th scope="col">21:00</th>
+                            <th scope="col">Domicile</th>
+                            <th scope="col" class="vs">VS</th>
+                            <th scope="col">Extérieur</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                            <td>@mdo</td>
+                            <td></td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                            <td>@fat</td>
+                            <td></td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                            <td>@twitter</td>
+                            <td></td>
+                            <td>@twitter</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    {#FIN#}
+
+    {#News#}
+    <div class="container">
+        <div class="row news">
+            <div class="col-md-12">
+                <h1 class="custom">Les News Ligue 1</h1>
+            </div>
+            <div class="col-md-4">
+                <div class="card-content">
+                    <div class="card-img">
+                        <img src="https://placeimg.com/380/230/nature" alt="">
+                    </div>
+                    <div class="card-desc">
+                        <h3>Heading</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
+                            voluptas totam</p>
+                        <a href="#" class="btn-card">Lire</a>
+                    </div>
+                </div>
+            </div>
+            {#{% for news in rss %}#}
+                {#{{ dump(news) }}#}
+                {#<div class="col-md-4">#}
+                    {#<div class="card-content">#}
+                        {#<div class="card-img">#}
+                            {#<img src="{{ news.item.enclosure.attibutes(url)   }}" alt="">#}
+                        {#</div>#}
+                        {#<div class="card-desc">#}
+                            {#<h3>{{ news.item.title }}</h3>#}
+                            {#<p>{{ news.item.title|length > 2 ? news.item.title|slice(0, 2) ~ '...' : news.item.title}}</p>#}
+                            {#<a href="{{ news.item.link }}" target="_blank" class="btn-card">Lire</a>#}
+                        {#</div>#}
+                    {#</div>#}
+                {#</div>#}
+            {#{% endfor %}#}
+            <div class="col-md-4">
+                <div class="card-content">
+                    <div class="card-img">
+                        <img src="https://placeimg.com/380/230/animals" alt="">
+                    </div>
+                    <div class="card-desc">
+                        <h3>Heading2</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
+                            voluptas totam</p>
+                        <a href="#" class="btn-card">Lire</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card-content">
+                    <div class="card-img">
+                        <img src="https://placeimg.com/380/230/tech" alt="">
+                    </div>
+                    <div class="card-desc">
+                        <h3>Heading3</h3>
+                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
+                            voluptas totam</p>
+                        <a href="#" class="btn-card">Lire</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    {#End News#}
+
+    {#Testimonials#}
+    <section class="testimonials">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="custom">Témoignages</h1>
+                    <i class="fa fa-quote-right text-center"></i>
+                    <p class="text-center">AutoSoccer c'est génial ! Avec je partage sans cesses mes réactions aux matchs que je regarde, en direct, avec mes amis ! <br> Extra ! <br> Essayer et vous serez conquis.</p>
+                    <span class="text-center">Tom Hardy</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    {#END Tetimonials#}
+
+
+    {# Footer #}
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-5">
+                    <ul class="list-unstyled list-inline social text-center">
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-facebook"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-twitter"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-instagram"></i></a></li>
+                        <li class="list-inline-item"><a href="#"><i class="fa fa-google-plus"></i></a></li>
+                        <li class="list-inline-item"><a href="#" target="_blank"><i class="fa fa-envelope"></i></a></li>
+                    </ul>
+                </div>
+                </hr>
+            </div>
+            <div class="row">
+                <div class="col-xs-12 col-sm-12 col-md-12 mt-2 mt-sm-2 text-center text-white">
+                    <p class="h6">&copy 2019 - Tous droits réservés.<a class="text-green ml-2" href="#" target="_blank">AutoSoccer</a></p>
+                </div>
+                </hr>
+            </div>
+        </div>
+    </footer>
+    {#End Footer #}
 {% endblock %}
+
+{#{% block footer %}#}
+    {#{% include 'footer.html.twig' %}#}
+{#{% endblock %}#}

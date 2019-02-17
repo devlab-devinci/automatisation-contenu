@@ -35,8 +35,13 @@ class LeagueController extends AbstractController
 
         $result = (array) json_decode($result);
 
+        // RSS
+
+        $rss = simplexml_load_file('https://rmcsport.bfmtv.com/rss/football/');
+
         return $this->render('default/logged.html.twig', [
-            'matches' => $result
+            'matches' => $result,
+            'rss' => $rss
         ]);
     }
 

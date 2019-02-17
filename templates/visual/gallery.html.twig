@@ -3,16 +3,22 @@
 {% block title %}Votre galerie photo{% endblock %}
 
 {% block body %}
-    <h1 class="my-5">Ma galerie photo</h1>
-    <div class="row my-5">
-        {% if photos %}
-            {% for photo in photos %}
-                <div class="col-md-4 col-sm-10 offset-sm-1 offset-md-0">
-                    <img src="{{ photo.path }}" class="photoGallery" alt="Photo upload par vous le {{ photo.createdAt|date("d/m/Y") }}" />
-                </div>
-            {% endfor %}
-        {% else %}
-            <p>Il n'y a pas encore de photos.</p>
-        {% endif %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="my-5">Ma galerie photo</h1>
+            </div>
+           {% if photos %}
+                {% for photo in photos %}
+                    <div class="col-lg-3 col-md-4 col-xs-6 thumb">
+                        <a href="{{ absolute_url(photo.path) ~ '?auto=compress' }}" class="fancybox" rel="ligthbox">
+                            <img  src="{{ photo.path }}" class="zoom img-fluid"  alt="Photo upload par vous le {{ photo.createdAt|date("d/m/Y") }}">
+                        </a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>Il n'y a pas encore de photos.</p>
+            {% endif %}
+        </div>
     </div>
 {% endblock %}

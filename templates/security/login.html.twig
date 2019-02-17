@@ -1,31 +1,45 @@
-{% extends 'base.html.twig' %}
+{% extends 'security/layout.html.twig' %}
 
 {% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <form method="post" class="container my-5">
-        {% if error %}
-            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
-        {% endif %}
+    <div class="sidenav">
+        <div class="login-main-text">
+            <img src="http://camilmesfioui.fr/autosoccer/logo-soccer.png" alt="logo">
+            <h2>Application<br> Login Page</h2>
+            <p>Login or register from here to access.</p>
+        </div>
+    </div>
+    <div class="main">
+        <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+                <form method="post" class="container my-5">
+                    {% if error %}
+                        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                    {% endif %}
 
-        <h1 class="h3 mb-3 font-weight-normal">Connexion</h1>
-        <label for="inputEmail" class="sr-only">Email</label>
-        <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-3" placeholder="Email" required autofocus>
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <h1 class="h3 mb-3 font-weight-normal custom">Connexion</h1>
+                    <label for="inputEmail" class="sr-only">Email</label>
+                    <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control mb-3" placeholder="Email" required autofocus>
+                    <label for="inputPassword" class="sr-only">Mot de Passe</label>
+                    <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Mot de Passe" required>
 
-        <input type="hidden" name="_csrf_token"
-               value="{{ csrf_token('authenticate') }}"
-        >
-            <div class="checkbox my-3">
-                <label>
-                    <input type="checkbox" name="_remember_me"> Se souvenir de moi
-                </label>
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}"
+                    >
+                    <div class="checkbox my-3">
+                        <label>
+                            <input type="checkbox" name="_remember_me"> Se souvenir de moi
+                        </label>
+                    </div>
+
+                    <button class="primaryButton" type="submit">
+                        Se connecter
+                    </button>
+                    <a href="/inscription" class="secondaryButton mr-3">S'inscrire</a>
+                    <p class="accueil"><a href="/">Retour à l'accueil</a></p>
+                </form>
             </div>
-
-        <a href="/" class="secondaryButton mr-3">Retour à l'accueil</a>
-        <button class="primaryButton" type="submit">
-            Se connecter
-        </button>
-    </form>
+        </div>
+    </div>
 {% endblock %}

@@ -1,23 +1,34 @@
-{% extends 'base.html.twig' %}
+{% extends 'security/layout.html.twig' %}
 
-{% block title %}Inscription{% endblock %}
+{% block title %}Connexion{% endblock %}
 
 {% block body %}
-    <div class="container my-5">
-        {{ form_start(form) }}
-        <div class="form-group">
-            {{ form_row(form.username) }}
+    <div class="sidenav">
+        <div class="login-main-text">
+            <img src="http://camilmesfioui.fr/autosoccer/logo-soccer.png" alt="logo">
+            <h2>Application<br> Login Page</h2>
+            <p>Login or register from here to access.</p>
         </div>
-        <div class="form-group">
-            {{ form_row(form.email) }}
+    </div>
+    <div class="main">
+        <div class="col-md-6 col-sm-12">
+            <div class="login-form">
+                {{ form_start(form) }}
+                <div class="form-group">
+                    {{ form_row(form.username) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.email) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.plainPassword.first) }}
+                </div>
+                <div class="form-group">
+                    {{ form_row(form.plainPassword.second) }}
+                </div>
+                <a href="/" class="secondaryButton mr-3">Retour à l'accueil</a><button class="primaryButton" type="submit">S'inscrire</button>
+                {{ form_end(form) }}
+            </div>
         </div>
-        <div class="form-group">
-            {{ form_row(form.plainPassword.first) }}
-        </div>
-        <div class="form-group">
-            {{ form_row(form.plainPassword.second) }}
-        </div>
-        <a href="/" class="secondaryButton mr-3">Retour à l'accueil</a><button class="primaryButton" type="submit">S'inscrire</button>
-        {{ form_end(form) }}
     </div>
 {% endblock %}
