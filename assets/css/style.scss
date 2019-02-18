@@ -54,6 +54,7 @@ nav {
     width: 100%;
 }
 
+
 .range-field {
     text-align: center;
     margin-bottom: 10px;
@@ -359,10 +360,17 @@ footer ul.quick-links li:hover a i {
         background: #ecf0f1;
     }
 
+    .card-list {
+        position: relative;
+        display: block;
+    }
+
     .card-content {
+        width: 30%;
         background: #ffffff;
         border: 4px;
         box-shadow: 0 2px 5px 0 rgba(0,0,0,.16), 0 2px 10px 0 rgba(0,0,0,.12);
+        margin-bottom: 20px;
     }
 
     .card-img {

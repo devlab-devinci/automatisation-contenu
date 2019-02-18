@@ -17,6 +17,7 @@ console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 const $ = require('jquery');
 
 require('jquery-ui-bundle');
+var Masonry = require('masonry-layout');
 
 //var slick = require("slick-carousel");
 window.jQuery = $;
@@ -42,5 +43,20 @@ $(document).ready(function() {
     }, function(){
         $(this).removeClass('transition');
     });
+
+    var grid = document.body.querySelector('.msry-list');
+    console.log(grid);
+    var msnry = new Masonry( grid, {
+        itemSelector: '.msry-item',
+        gutter: 20,
+    });
+    console.log(msnry);
+    //Grille Home
+    //$('.card-content').masonry({
+    //    // options...
+    //    itemSelector: '.card-img',
+    //    columnWidth: 200
+    //});
 });
+
 

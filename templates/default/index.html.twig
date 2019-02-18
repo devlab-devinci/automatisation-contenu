@@ -144,64 +144,52 @@
 
     {#News#}
     <div class="container">
-        <div class="row news">
+        <div class="news">
             <div class="col-md-12">
                 <h1 class="custom">Les News Ligue 1</h1>
             </div>
-            <div class="col-md-4">
-                <div class="card-content">
-                    <div class="card-img">
-                        <img src="https://placeimg.com/380/230/nature" alt="">
+            <div class="card-list msry-list">
+                {% for news in rss.channel.item %}
+                    {% if loop.index < 10 %}
+                    <div class="card-content msry-item">
+                        <div class="card-img">
+                            <img src="{{ news.enclosure.attributes.url   }}" alt="">
+                        </div>
+                        <div class="card-desc">
+                            <h3>{{ news.title }}</h3>
+                            <p>{{ news.title|length > 2 ? news.title|slice(0, 2) ~ '...' : news.title}}</p>
+                            <a href="{{ news.link }}" target="_blank" class="btn-card">Lire</a>
+                        </div>
                     </div>
-                    <div class="card-desc">
-                        <h3>Heading</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
-                            voluptas totam</p>
-                        <a href="#" class="btn-card">Lire</a>
-                    </div>
-                </div>
+                    {% endif %}
+                {% endfor %}
             </div>
-            {#{% for news in rss %}#}
-            {#{{ dump(news) }}#}
             {#<div class="col-md-4">#}
-            {#<div class="card-content">#}
-            {#<div class="card-img">#}
-            {#<img src="{{ news.item.enclosure.attibutes(url)   }}" alt="">#}
+                {#<div class="card-content">#}
+                    {#<div class="card-img">#}
+                        {#<img src="https://placeimg.com/380/230/animals" alt="">#}
+                    {#</div>#}
+                    {#<div class="card-desc">#}
+                        {#<h3>Heading2</h3>#}
+                        {#<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis#}
+                            {#voluptas totam</p>#}
+                        {#<a href="#" class="btn-card">Lire</a>#}
+                    {#</div>#}
+                {#</div>#}
             {#</div>#}
-            {#<div class="card-desc">#}
-            {#<h3>{{ news.item.title }}</h3>#}
-            {#<p>{{ news.item.title|length > 2 ? news.item.title|slice(0, 2) ~ '...' : news.item.title}}</p>#}
-            {#<a href="{{ news.item.link }}" target="_blank" class="btn-card">Lire</a>#}
+            {#<div class="col-md-4">#}
+                {#<div class="card-content">#}
+                    {#<div class="card-img">#}
+                        {#<img src="https://placeimg.com/380/230/tech" alt="">#}
+                    {#</div>#}
+                    {#<div class="card-desc">#}
+                        {#<h3>Heading3</h3>#}
+                        {#<p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis#}
+                            {#voluptas totam</p>#}
+                        {#<a href="#" class="btn-card">Lire</a>#}
+                    {#</div>#}
+                {#</div>#}
             {#</div>#}
-            {#</div>#}
-            {#</div>#}
-            {#{% endfor %}#}
-            <div class="col-md-4">
-                <div class="card-content">
-                    <div class="card-img">
-                        <img src="https://placeimg.com/380/230/animals" alt="">
-                    </div>
-                    <div class="card-desc">
-                        <h3>Heading2</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
-                            voluptas totam</p>
-                        <a href="#" class="btn-card">Lire</a>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card-content">
-                    <div class="card-img">
-                        <img src="https://placeimg.com/380/230/tech" alt="">
-                    </div>
-                    <div class="card-desc">
-                        <h3>Heading3</h3>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Laboriosam, voluptatum! Dolor quo, perspiciatis
-                            voluptas totam</p>
-                        <a href="#" class="btn-card">Lire</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </div>
     {#End News#}

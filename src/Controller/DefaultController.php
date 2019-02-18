@@ -36,6 +36,8 @@ class DefaultController extends AbstractController
         // RSS
 
         $rss = simplexml_load_file('https://rmcsport.bfmtv.com/rss/football/');
+//        dump($rss);
+//        die;
 
         return $this->render('default/index.html.twig', [
             'matches' => $result,

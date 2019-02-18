@@ -16,6 +16,8 @@
         "build": "encore production --progress"
     },
     "dependencies": {
-        "jquery-ui-bundle": "^1.12.1-migrate"
+        "imports-loader": "^0.8.0",
+        "jquery-ui-bundle": "^1.12.1-migrate",
+        "masonry-layout": "^4.2.2"
     }
 }
