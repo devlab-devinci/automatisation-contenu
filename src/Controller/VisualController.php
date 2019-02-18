@@ -3,12 +3,14 @@
 namespace App\Controller;
 
 use App\Entity\Gallery;
+use App\Entity\Visual;
 use App\Form\VisualType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class VisualController extends AbstractController
 {
@@ -71,8 +73,62 @@ class VisualController extends AbstractController
         $repositoryGallery = $this->getDoctrine()->getRepository(Gallery::class);
         $photos = $repositoryGallery->findBy(['userId' => $user->getId()], ['createdAt' => 'DESC']);
 
+        $repositoryVisual = $this->getDoctrine()->getRepository(Visual::class);
+        $visuals = $repositoryVisual->findBy(['userId' => $user->getId()], ['createdAt' => 'DESC']);
+
         return $this->render('visual/gallery.html.twig', [
-            'photos' => $photos
+            'photos' => $photos,
+            'visuals' => $visuals
         ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param UserInterface $user
+     * @Route("/creation", name="creation")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function creation(Request $request, UserInterface $user)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $repositoryGallery = $this->getDoctrine()->getRepository(Gallery::class);
+        $photo = $repositoryGallery->findOneBy(['userId' => $user->getId()], ['createdAt' => 'DESC']);
+
+        return $this->render('visual/creation.html.twig', [
+            'photo' => $photo,
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param UserInterface $user
+     * @Route("/saveVisual", name="saveVisual")
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
+    public function saveVisual(Request $request, UserInterface $user)
+    {
+        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+
+        $img = $request->request->get('img');
+
+        list(, $img) = explode(';', $img);
+        list(, $img) = explode(',', $img);
+        $img = base64_decode($img);
+
+        $pictureUrl = 'uploads/visual/' .uniqid($user->getId()).'.jpeg';
+        file_put_contents($pictureUrl, $img);
+        $entity = $this->getDoctrine()->getManager();
+        $picture = new Visual();
+        $picture->setPath($pictureUrl);
+        $picture->setUserId($user);
+        $picture->setCreatedAt(new \DateTime());
+        $entity->persist($picture);
+        $entity->flush();
+
+        $response = new JsonResponse();
+        $response->setData($user->getId());
+        return $response;
+
     }
 }

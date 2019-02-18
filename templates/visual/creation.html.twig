@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création de visuel{% endblock %}
+
+{% block body %}
+    <div class="container">
+            <div class="row">
+                <p>Créer votre visuel :</p>
+
+                <div class="sliders col s4">
+                <form id="imageEditor">
+
+                  <div id="imgPart">
+                    <p class="range-field">
+                        <label for="gs">Niveaux de gris</label>
+                        <input class="editImage" type="range" id="gs" name="gs" min="0" max="100" value="0"/>
+                    </p>
+                    <p class="range-field">
+                        <label for="blur">Blur</label>
+                        <input class="editImage" type="range" id="blur" name="blur" min="0" max="10" value="0"/>
+                    </p>
+                    <p class="range-field">
+                        <label for="br">Exposition</label>
+					              <input class="editImage" id="br" name="br" type="range" min=0 max=200 value=100>
+                    </p>
+                    <p class="range-field">
+                        <label for="ct">Contraste</label>
+                        <input class="editImage" id="ct" name="ct" type="range" min=0 max=200 value=100>
+                    </p>
+                    <p class="range-field">
+                        <label for="huer">Rotation de teinte</label>
+					              <input class="editImage" id="huer" name="huer" type="range" min=0 max=360 value=0>
+                    </p>
+                    <p class="range-field">
+                        <label for="opacity">Opacité</label>
+					              <input class="editImage" id="opacity" name="opacity" type="range" min=0 max=100 value=100>
+                    </p>
+                    <p class="range-field">
+                        <label for="invert">Inversion des couleurs</label>
+					              <input class="editImage" id="invert" name="invert" type="range" min=0 max=100 value=0>
+                    </p>
+                    <p class="range-field">
+                        <label for="saturate">Saturation</label>
+					              <input class="editImage" id="saturate" name="saturate" type="range" min=0 max=500 value=100>
+                    </p>
+                    <p class="range-field">
+                        <label for="sepia">Sépia</label>
+					              <input class="editImage" id="sepia" name="sepia" type="range" min=0 max=100 value=0>
+                    </p>
+
+                  </div>
+
+                    <div id="textPart">
+                      <p class="range-field">
+                        <label for="text-visual" name="text-visual">Votre texte :</label>
+                        <input type="text" name="text-visual" id="text-visual" value="">
+                      </p>
+
+                      <p class="range-field">
+                        <button type="button" name="button-big" id="bigger">Plus grand</button>
+                        <button type="button" name="button-small" id="smaller">Plus petit</button>
+                      </p>
+
+                      <p class="range-field">
+                          <label for="heightText">Verticale</label>
+                          <input type="range" id="heightText" name="heightText" min="0" max="100" value=0>
+                      </p>
+
+                      <p class="range-field">
+                          <label for="widthText">Horizontale</label>
+                          <input type="range" id="widthText" name="widthText" min="0" max="100" value=0>
+                      </p>
+                    </div>
+
+                    <button class="btn waves-effect waves-light"  type="reset" id="reset">Reset</button>
+                </form>
+            </div>
+
+            <!-- Image preview -->
+            <div class="col s8">
+                <div class="imageContainer" id="imageContainer-preview">
+                  <p></p>
+                    <img src="{{ photo.path }}"/>
+                </div>
+            </div>
+          </div>
+
+          <!-- Real image saved -->
+          <div style="position:absolute;margin-left:-10000px;">
+            <div class="imageContainer" id="imageContainer-real">
+              <p></p>
+              <img src="{{ photo.path }}"/>
+            </div>
+          </div>
+
+            </div>
+            <a href="" id="button-publish">Enregistrer ce visuel</a>
+
+    </div>
+{% endblock %}
