@@ -27,13 +27,18 @@ nav {
     }
 }
 
+.zero-auto {
+    display: block;
+    margin: 30px auto;
+}
+
 .btn-custom {
     padding: 10px 25px;
     background-color: #4F8B5C;
     color: #FFF;
     border: 1px solid #728B76;
     border-radius: 15px;
-    margin: 30px 0px;
+    margin: 30px auto;
     cursor: pointer;
     &:hover {
         color: #fff;

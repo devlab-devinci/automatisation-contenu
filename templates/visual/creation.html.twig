@@ -122,7 +122,26 @@
                         </div>
                     </div>
                 </form>
-            </div>
+                <!-- Image preview -->
+                <div class="col s8">
+                    <div class="imageContainer" id="imageContainer-preview">
+                        <p></p>
+                        <img src="{{ photo.path }}"/>
+                    </div>
+                </div>
+
+                <!-- Real image saved -->
+                <div style="position:absolute;margin-left:-10000px;">
+                    <div class="imageContainer" id="imageContainer-real">
+                        <p></p>
+                        <img src="{{ photo.path }}"/>
+                    </div>
+                </div>
+
+                </div>
+                <a href="" id="button-publish" class="btn-custom zero-auto">Enregistrer ce visuel</a>
+
+    </div>
         </div>
     </div>
 {% endblock %}
