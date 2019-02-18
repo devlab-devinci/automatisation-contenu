@@ -18,10 +18,14 @@
             </div>
         {% endif %}
         {% if photo %}
-            <div class="text-center">
+            <div class="text-center mb-5">
                 <p>Vous avez mis cette photo en ligne :</p>
                 <img class="photoSubmitted" src="{{ photo }}" alt="Photo upload" />
-                <a href="/creation">Créer un visuel</a>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <a href="/creation" class="btn-custom">Créer un visuel</a>
+                </div>
             </div>
         {% endif %}
     </div>

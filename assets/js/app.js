@@ -16,6 +16,8 @@ console.log('Hello Webpack Encore! Edit me in assets/js/app.js');
 // loads the jquery package from node_modules
 const $ = require('jquery');
 
+require('jquery-ui-bundle');
+
 //var slick = require("slick-carousel");
 window.jQuery = $;
 

@@ -27,6 +27,38 @@ nav {
     }
 }
 
+.btn-custom {
+    padding: 10px 25px;
+    background-color: #4F8B5C;
+    color: #FFF;
+    border: 1px solid #728B76;
+    border-radius: 15px;
+    margin: 30px 0px;
+    cursor: pointer;
+    &:hover {
+        color: #fff;
+        background: #5FA86F;
+        transition: 0.3s ease;
+        text-decoration: none;
+    }
+}
+
+.custom-input {
+    display: block;
+    width: 40%;
+    margin: 0 auto;
+    margin-bottom: 40px;
+}
+
+.custom-range, .editImage {
+    width: 100%;
+}
+
+.range-field {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
 //nav{background-color: #5FA86F;}
 nav{background-color: #FFF;}
 .primaryButton {padding: 10px 25px; background-color: #4F8B5C; color: #FFF; border: 1px solid #728B76; border-radius: 15px;}
