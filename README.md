@@ -24,3 +24,14 @@ If you want to add _fixtures_, run this command : `php bin/console doctrine:fixt
 ## Run the project
 
 - `php bin/console server:run`
+
+UPDATE 18/02/19
+
+## Yarn
+
+- yarn install
+- yarn encore dev
+
+## Compiler Scss
+
+- yarn encore dev --watch
