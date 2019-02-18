@@ -35,7 +35,7 @@ class LeagueController extends AbstractController
 
         $result = (array) json_decode($result);
 
-        return $this->render('league/index.html.twig', [
+        return $this->render('league/history.html.twig', [
             'matches' => $result
         ]);
     }
