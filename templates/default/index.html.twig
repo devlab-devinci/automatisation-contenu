@@ -157,7 +157,7 @@
                         </div>
                         <div class="card-desc">
                             <h3>{{ news.title }}</h3>
-                            <p>{{ news.title|length > 2 ? news.title|slice(0, 2) ~ '...' : news.title}}</p>
+                            <p>{{ news.description|striptags|slice(0, 100) ~ '...' }}</p>
                             <a href="{{ news.link }}" target="_blank" class="btn-card">Lire</a>
                         </div>
                     </div>
