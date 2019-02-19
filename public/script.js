@@ -116,6 +116,10 @@ $(document).ready(function(){
             })
             .done(function( response ) {
               console.log("c'est fait");
+              window.location.pathname = "/gallery";
+              console.log(window.location.href);
+              console.log(window.location.pathname);
+              alert("Votre visuel est enregistré dans la galerie");
             });
         })
 
