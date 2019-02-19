@@ -35,3 +35,5 @@ UPDATE 18/02/19
 ## Compiler Scss
 
 - yarn encore dev --watch
+
+/!\ create a "visual" file into your "public/uploads" file
