@@ -52,47 +52,7 @@
     </div>
     {# End Intro #}
 
-    {# Match List #}
-    <div class="container">
-        <div class="row matchsList">
-            <div class="col-12">
-                <h1 class="custom">Match(s) de Ligue 1 à venir dans les 3 prochains jours</h1>
-                {% if matches.error is not defined %}
-                    {% if not matches %}
-                        <p class="mx-5">Il n'y a pas de match sur les 3 jours à venir.</p>
-                    {% else %}
-                        {% for matcheItem in matches %}
-                            <div class="matchsItem">
-                                <div class="matchsItem__header">
-                                    <span class="mr-3">{{ matcheItem.country_name ~ ' - ' ~ matcheItem.league_name }}</span>
-                                    <span class="mr-3">{{ matcheItem.match_date|date('d/m/Y') ~ ' - ' ~ matcheItem.match_time }}</span>
-                                    {% if matcheItem.match_status != "" %}
-                                        <span class="mr-3">{{ "Statut : " ~ matcheItem.match_status }}</span>
-                                    {% endif %}
-                                    {% if matcheItem.match_hometeam_score == "" %}
-                                        <span>{{ matcheItem.match_hometeam_name ~ ' 0' }}</span>
-                                    {% else %}
-                                        <span>{{ matcheItem.match_hometeam_name ~ ' ' ~ matcheItem.match_hometeam_score }}</span>
-                                    {% endif %}
-                                    {% if matcheItem.match_awayteam_score == "" %}
-                                        <span>{{ '- 0 ' ~ matcheItem.match_awayteam_name }}</span>
-                                    {% else %}
-                                        <span>{{ '- ' ~ matcheItem.match_awayteam_score ~ ' ' ~ matcheItem.match_awayteam_name }}</span>
-                                    {% endif %}
-                                </div>
-                            </div>
-                        {% endfor %}
-                    {% endif %}
-                {% else %}
-                    <p class="mx-5">Il n'y a pas de match sur les 3 jours à venir.</p>
-                {% endif %}
-            </div>
-        </div>
-    </div>
-    {#End Match List#}
-
-
-    {#TEST Match list #}
+    {# Match list #}
     <section class="testimonials">
         <div class="container">
             <div class="row">
@@ -101,39 +61,25 @@
                     <table class="table table-striped">
                         <thead>
                         <tr>
-                            <th scope="col">France - Ligue 1</th>
-                            <th scope="col">1/01/2019</th>
-                            <th scope="col">21:00</th>
+                            <th scope="col">Pays - Ligue</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Début</th>
                             <th scope="col">Domicile</th>
                             <th scope="col" class="vs">VS</th>
                             <th scope="col">Extérieur</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Mark</td>
-                            <td>Otto</td>
-                            <td>@mdo</td>
-                            <td>@mdo</td>
-                            <td></td>
-                            <td>@mdo</td>
-                        </tr>
-                        <tr>
-                            <td>Jacob</td>
-                            <td>Thornton</td>
-                            <td>@fat</td>
-                            <td>@fat</td>
-                            <td></td>
-                            <td>@fat</td>
-                        </tr>
-                        <tr>
-                            <td>Larry</td>
-                            <td>the Bird</td>
-                            <td>@twitter</td>
-                            <td>@twitter</td>
-                            <td></td>
-                            <td>@twitter</td>
-                        </tr>
+                        {% for matcheItem in matches %}
+                            <tr>
+                                <td>{{ matcheItem.country_name ~ ' - ' ~ matcheItem.league_name }}</td>
+                                <td>{{ matcheItem.match_date|date('d/m/Y') }}</td>
+                                <td>{{ matcheItem.match_time }}</td>
+                                <td>{{ matcheItem.match_hometeam_name }}</td>
+                                <td></td>
+                                <td>{{ matcheItem.match_awayteam_name }}</td>
+                            </tr>
+                        {% endfor %}
                         </tbody>
                     </table>
                 </div>
@@ -153,11 +99,12 @@
                     {% if loop.index < 10 %}
                     <div class="card-content msry-item">
                         <div class="card-img">
-                            <img src="{{ news.enclosure.attributes.url   }}" alt="">
+                            <img src="{{ news.enclosure.attributes.url }}" alt="">
                         </div>
                         <div class="card-desc">
                             <h3>{{ news.title }}</h3>
-                            <p>{{ news.description|striptags|slice(0, 100) ~ '...' }}</p>
+                            {#<p>{{ news.description|striptags|slice(0, 120) ~ '...' }}</p>#}
+                            <p>{{ news.description|striptags }}</p>
                             <a href="{{ news.link }}" target="_blank" class="btn-card">Lire</a>
                         </div>
                     </div>

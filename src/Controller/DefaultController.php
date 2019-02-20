@@ -14,7 +14,8 @@ class DefaultController extends AbstractController
     {
 //        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        $APIkey=$this->getParameter('FOOTBALL_API_KEY');
+        $APIkey='c6bce5764efe778c7383b54d5b3297e3119f518fe4bf122b1cfece5978244525';
+//        $APIkey=$this->getParameter('FOOTBALL_API_KEY');
         $from = date('Y-m-d');
         $to = date('Y-m-d', strtotime('+3 days'));
 
@@ -35,8 +36,9 @@ class DefaultController extends AbstractController
 
         // RSS
 
-        $rss = simplexml_load_file('https://rmcsport.bfmtv.com/rss/football/');
-//        dump($rss);
+//        $rss = simplexml_load_file('https://rmcsport.bfmtv.com/rss/football/');
+        $rss = simplexml_load_file('http://www.sports.fr//fr/cmc/football/rss.xml');
+//        dump($result);
 //        die;
 
         return $this->render('default/index.html.twig', [
