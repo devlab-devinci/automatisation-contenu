@@ -70,16 +70,16 @@
                         </tr>
                         </thead>
                         <tbody>
-                        {% for matcheItem in matches %}
-                            <tr>
-                                <td>{{ matcheItem.country_name ~ ' - ' ~ matcheItem.league_name }}</td>
-                                <td>{{ matcheItem.match_date|date('d/m/Y') }}</td>
-                                <td>{{ matcheItem.match_time }}</td>
-                                <td>{{ matcheItem.match_hometeam_name }}</td>
-                                <td></td>
-                                <td>{{ matcheItem.match_awayteam_name }}</td>
-                            </tr>
-                        {% endfor %}
+                        {#{% for matcheItem in matches %}#}
+                            {#<tr>#}
+                                {#<td>{{ matcheItem.country_name ~ ' - ' ~ matcheItem.league_name }}</td>#}
+                                {#<td>{{ matcheItem.match_date|date('d/m/Y') }}</td>#}
+                                {#<td>{{ matcheItem.match_time }}</td>#}
+                                {#<td>{{ matcheItem.match_hometeam_name }}</td>#}
+                                {#<td></td>#}
+                                {#<td>{{ matcheItem.match_awayteam_name }}</td>#}
+                            {#</tr>#}
+                        {#{% endfor %}#}
                         </tbody>
                     </table>
                 </div>
@@ -103,8 +103,8 @@
                         </div>
                         <div class="card-desc">
                             <h3>{{ news.title }}</h3>
-                            {#<p>{{ news.description|striptags|slice(0, 120) ~ '...' }}</p>#}
-                            <p>{{ news.description|striptags }}</p>
+                            <p>{{ news.description|striptags|slice(0, 120) ~ '...' }}</p>
+                            {#<p>{{ news.description|striptags }}</p>#}
                             <a href="{{ news.link }}" target="_blank" class="btn-card">Lire</a>
                         </div>
                     </div>

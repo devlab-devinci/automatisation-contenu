@@ -38,7 +38,7 @@
             <nav class="navbar navbar-expand-md">
                 <div class="container">
                     <img src="img/template/soccer-ball.png" alt="icon-ball">
-                    <a class="navbar-brand ml-2 mt-1" href="/">AUT<span>O</span> S<span>O</span>CCER</a>
+                    <a class="navbar-brand ml-2 mt-1" href="{{ path('home') }}">AUT<span>O</span> S<span>O</span>CCER</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -49,13 +49,12 @@
                                     Matchs
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <li><a class="dropdown-item" href="/">Tableau de bord</a></li>
-                                    <li><a class="dropdown-item" href="/history">Historique</a></li>
-                                    <li><a class="dropdown-item" href="/history">Direct</a></li>
+                                    <li><a class="dropdown-item" href="{{ url('history') }}">Historique</a></li>
+                                    <li><a class="dropdown-item" href="{{ url('history') }}">Direct</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item active">
-                                <a class="nav-link" href="/social">Réseaux sociaux</a>
+                                <a class="nav-link" href="{{ path('social') }}">Réseaux sociaux</a>
                             </li>
                             {% if is_granted('ROLE_USER') %}
                                 <li class="nav-item dropdown">
@@ -63,8 +62,8 @@
                                         Visuels
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                        <li><a class="dropdown-item" href="/visual">Création de visuel</a></li>
-                                        <li><a class="dropdown-item" href="/gallery">Votre gelerie photo</a></li>
+                                        <li><a class="dropdown-item" href="{{ path('visualView') }}">Création de visuel</a></li>
+                                        <li><a class="dropdown-item" href="{{ path('gallery') }}">Votre gelerie photo</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item active">
@@ -72,10 +71,10 @@
                                 </li>
                             {% else %}
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="/inscription">Inscription</a>
+                                    <a class="nav-link" href="{{ path('user_registration') }}">Inscription</a>
                                 </li>
                                 <li class="nav-item active">
-                                    <a class="nav-link" href="/connexion">Connexion</a>
+                                    <a class="nav-link" href="{{ path('app_login') }}">Connexion</a>
                                 </li>
                             {% endif %}
                         </ul>
